@@ -32,23 +32,7 @@ class DropsWeather extends utils.Adapter {
 	async onReady() {
 
 		await this.getLanguage();
-
-    this.browser = await puppeteer.launch({ 
-          headless: true,
-          ignoreHTTPSErrors: true,
-          args: [
-            "--no-sandbox",
-            "--disable-setuid-sandbox",
-            "--disable-dev-shm-usage",
-            "--disable-accelerated-2d-canvas",
-            "--no-first-run",
-            "--no-zygote",
-            "--single-process",
-            "--disable-gpu",
-            "--ignore-certificate-errors",
-          ],
-        });    
-
+   
 		starttimeout = setTimeout(() => {
 			if (this.config.citycode === null || this.config.citycode === '') {
 				this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
@@ -63,7 +47,7 @@ class DropsWeather extends utils.Adapter {
 			} else {
 				this.readDataFromServer();
 			}
-		}, 60 * 1000); // alle 5 min
+		}, 1000 * 60 * 5); // alle 5 min
 	}
 
 	//----------------------------------------------------------------------------------------------------
@@ -98,10 +82,25 @@ class DropsWeather extends utils.Adapter {
 
 		let weatherdataFound = false;
 
-		
+		const browser = await puppeteer.launch({ 
+          headless: true,
+          ignoreHTTPSErrors: true,
+          args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-accelerated-2d-canvas",
+            "--no-first-run",
+            "--no-zygote",
+            "--single-process",
+            "--disable-gpu",
+            "--ignore-certificate-errors",
+          ],
+        });    
+
     try {
 			
-      const page = await this.browser.newPage();
+      const page = await browser.newPage();
 			
       await page.setUserAgent(
 				'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
@@ -165,7 +164,7 @@ class DropsWeather extends utils.Adapter {
 		}
     finally {
       this.log.debug('destroy browser');
-      await this.browser.close();
+      await browser.close();
     }
 	}
 
