@@ -1,6 +1,8 @@
 'use strict';
 const dayjs = require('dayjs');
 require('dayjs/locale/de');
+const utc =require('dayjs/plugin/utc');
+
 const puppeteer = require('puppeteer');
 
 let interval = null;
@@ -32,7 +34,7 @@ class DropsWeather extends utils.Adapter {
 	async onReady() {
 
 		await this.getLanguage();
-   
+
 		starttimeout = setTimeout(() => {
 			if (this.config.citycode === null || this.config.citycode === '') {
 				this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
@@ -75,34 +77,34 @@ class DropsWeather extends utils.Adapter {
 	}
 	//----------------------------------------------------------------------------------------------------
 	async readDataFromServer() {
-		
+
 		const url = this.baseUrl + this.config.citycode;
 
 		this.log.debug('Reading data from : ' + url);
 
 		let weatherdataFound = false;
 
-		const browser = await puppeteer.launch({ 
-          headless: true,
-          ignoreHTTPSErrors: true,
-          args: [
-            "--no-sandbox",
-            "--disable-setuid-sandbox",
-            "--disable-dev-shm-usage",
-            "--disable-accelerated-2d-canvas",
-            "--no-first-run",
-            "--no-zygote",
-            "--single-process",
-            "--disable-gpu",
-            "--ignore-certificate-errors",
-          ],
-        });    
+		const browser = await puppeteer.launch({
+			headless: true,
+			ignoreHTTPSErrors: true,
+			args: [
+				"--no-sandbox",
+				"--disable-setuid-sandbox",
+				"--disable-dev-shm-usage",
+				"--disable-accelerated-2d-canvas",
+				"--no-first-run",
+				"--no-zygote",
+				"--single-process",
+				"--disable-gpu",
+				"--ignore-certificate-errors",
+			],
+		});
 
-    try {
-			
-      const page = await browser.newPage();
-			
-      await page.setUserAgent(
+		try {
+
+			const page = await browser.newPage();
+
+			await page.setUserAgent(
 				'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 			);
 
@@ -154,7 +156,7 @@ class DropsWeather extends utils.Adapter {
 						console.log('end of data in series NOT found');
 					}
 				}
-			}			
+			}
 
 			if (!weatherdataFound) {
 				this.log.warn('no weatherData found in HTML');
@@ -162,10 +164,10 @@ class DropsWeather extends utils.Adapter {
 		} catch (error) {
 			this.log.warn(error);
 		}
-    finally {
-      this.log.debug('destroy browser');
-      await browser.close();
-    }
+		finally {
+			this.log.debug('destroy browser');
+			await browser.close();
+		}
 	}
 
 	splitByNewline(inputString) {
@@ -176,6 +178,7 @@ class DropsWeather extends utils.Adapter {
 	async createStateData(data, channel) {
 		try {
 			let JSONdata_rain = [];
+			let JSONdata_echart = [];
 			let raindata = [];
 			let isRainingNow = false;
 			let rainStartsAt = '-1';
@@ -186,6 +189,7 @@ class DropsWeather extends utils.Adapter {
 			//	this.log.info(JSON.stringify(data));
 
 			if (data[0].precipitationrate > 0) isRainingNow = true;
+
 			this.setStateAsync(channel + '.isRainingNow', { val: isRainingNow, ack: true });
 
 			await this.setStateAsync(channel + '.timestamp', { val: data[0].time, ack: true });
@@ -195,8 +199,13 @@ class DropsWeather extends utils.Adapter {
 				raindata.push(data[i].precipitationrate);
 
 				const item_rain = {};
+				const item_rain_echart = {};
 
+				const dat = data[i].time;
 				const date = dayjs(data[i].time);
+
+				dayjs.extend(utc);
+				const timestamp = dayjs.utc(data[i].time).valueOf();
 
 				if (rainStartsAt == '-1')
 					if (data[i].precipitationrate > 0) {
@@ -211,14 +220,22 @@ class DropsWeather extends utils.Adapter {
 				item_rain['label'] = date.format(dateformat).toString();
 				item_rain['value'] = data[i].precipitationrate.toString();
 				JSONdata_rain.push(item_rain);
+
+				item_rain_echart['ts'] = timestamp;
+				item_rain_echart['val'] = data[i].precipitationrate;
+				JSONdata_echart.push(item_rain_echart);
+
+
 			}
 			JSONdata_rain = JSON.parse(JSON.stringify(JSONdata_rain));
+			JSONdata_echart = JSON.parse(JSON.stringify(JSONdata_echart));
 
 			raindata = JSON.parse(JSON.stringify(raindata));
 
 			this.log.debug(`Rain (${channel}): ` + JSON.stringify(JSONdata_rain));
 
 			await this.setStateAsync(channel + '.chartRain', { val: JSON.stringify(JSONdata_rain), ack: true });
+			await this.setStateAsync(channel + '.echartRain', { val: JSON.stringify(JSONdata_echart), ack: true });
 			await this.setStateAsync(channel + '.raindata', { val: JSON.stringify(raindata), ack: true });
 			await this.setStateAsync(channel + '.rainStartsAt', { val: rainStartsAt, ack: true });
 			await this.setStateAsync(channel + '.startRain', { val: rainStartAmount, ack: true });

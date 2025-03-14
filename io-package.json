@@ -219,6 +219,29 @@
       "native": {}
     },
     {
+      "_id": "data_5min.echartRain",
+      "type": "state",
+      "common": {
+        "name": {
+          "en": "JSON_eChart_Rain",
+          "de": "JSON_eChart_Rain",
+          "ru": "JSON_eChart_Rain",
+          "pt": "JSON_eChart_Rain",
+          "nl": "JSON_eChart_Rain",
+          "fr": "JSON_eChart_Rain",
+          "it": "JSON_eChart_Rain",
+          "es": "JSON_eChart_Rain",
+          "pl": "JSON_eChart_Rain",
+          "zh-cn": "JSON_eChart_Rain"
+        },
+        "type": "json",
+        "role": "text",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    },
+    {
       "_id": "data_5min.timestamp",
       "type": "state",
       "common": {
@@ -373,6 +396,29 @@
           "es": "JSON_Chart_Rain",
           "pl": "JSON_Chart_Rain",
           "zh-cn": "JSON_Chart_Rain"
+        },
+        "type": "json",
+        "role": "text",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "data_1h.echartRain",
+      "type": "state",
+      "common": {
+        "name": {
+          "en": "JSON_eChart_Rain",
+          "de": "JSON_eChart_Rain",
+          "ru": "JSON_eChart_Rain",
+          "pt": "JSON_eChart_Rain",
+          "nl": "JSON_eChart_Rain",
+          "fr": "JSON_eChart_Rain",
+          "it": "JSON_eChart_Rain",
+          "es": "JSON_eChart_Rain",
+          "pl": "JSON_eChart_Rain",
+          "zh-cn": "JSON_eChart_Rain"
         },
         "type": "json",
         "role": "text",
