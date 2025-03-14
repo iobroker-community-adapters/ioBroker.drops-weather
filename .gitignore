@@ -1,2 +1,9 @@
-node_modules
+# No dot-directories except github/vscode
+.*/
+!.vscode/
+!.github/
+
 .dev-server/
+
+*.code-workspace
+node_modules
