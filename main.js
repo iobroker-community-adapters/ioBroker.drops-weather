@@ -22,8 +22,6 @@ class DropsWeather extends utils.Adapter {
 
 		this.baseUrl = 'https://www.meteox.com/en-gb/city/';
 
-		this.dropsCall;
-
 		this.on('ready', this.onReady.bind(this));
 		this.on('unload', this.onUnload.bind(this));
 	}
@@ -34,6 +32,22 @@ class DropsWeather extends utils.Adapter {
 	async onReady() {
 
 		await this.getLanguage();
+
+    this.browser = await puppeteer.launch({ 
+          headless: true,
+          ignoreHTTPSErrors: true,
+          args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-accelerated-2d-canvas",
+            "--no-first-run",
+            "--no-zygote",
+            "--single-process",
+            "--disable-gpu",
+            "--ignore-certificate-errors",
+          ],
+        });    
 
 		starttimeout = setTimeout(() => {
 			if (this.config.citycode === null || this.config.citycode === '') {
@@ -49,7 +63,7 @@ class DropsWeather extends utils.Adapter {
 			} else {
 				this.readDataFromServer();
 			}
-		}, 5 * 60 * 1000);
+		}, 60 * 1000); // alle 5 min
 	}
 
 	//----------------------------------------------------------------------------------------------------
@@ -77,17 +91,19 @@ class DropsWeather extends utils.Adapter {
 	}
 	//----------------------------------------------------------------------------------------------------
 	async readDataFromServer() {
-		try {
-			const url = this.baseUrl + this.config.citycode;
+		
+		const url = this.baseUrl + this.config.citycode;
 
-			this.log.debug('Reading data from : ' + url);
+		this.log.debug('Reading data from : ' + url);
 
-			let weatherdataFound = false;
+		let weatherdataFound = false;
 
-			const browser = await puppeteer.launch({ headless: true });
-			const page = await browser.newPage();
-
-			await page.setUserAgent(
+		
+    try {
+			
+      const page = await this.browser.newPage();
+			
+      await page.setUserAgent(
 				'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 			);
 
@@ -139,8 +155,7 @@ class DropsWeather extends utils.Adapter {
 						console.log('end of data in series NOT found');
 					}
 				}
-			}
-			await browser.close();
+			}			
 
 			if (!weatherdataFound) {
 				this.log.warn('no weatherData found in HTML');
@@ -148,6 +163,10 @@ class DropsWeather extends utils.Adapter {
 		} catch (error) {
 			this.log.warn(error);
 		}
+    finally {
+      this.log.debug('destroy browser');
+      await this.browser.close();
+    }
 	}
 
 	splitByNewline(inputString) {
