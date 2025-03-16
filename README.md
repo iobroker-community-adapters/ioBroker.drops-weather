@@ -46,12 +46,11 @@ In this example you will find 6573 for Berlin.
 -->
 
 ### **WORK IN PROGRESS**
-
--   (inbux) store weather text in labeltext state
+-   (arteck) switch from axios to puppeteer
 
 ### 0.3.1 (2024-02-05)
 
--
+- (inbux)
 
 ### 0.3.0 (2024-02-05)
 

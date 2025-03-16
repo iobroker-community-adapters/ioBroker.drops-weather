@@ -1,23 +1,16 @@
 'use strict';
-const cheerio = require('cheerio');
 const dayjs = require('dayjs');
 require('dayjs/locale/de');
+const utc =require('dayjs/plugin/utc');
 
-const axios = require('axios').default || require('axios'); // to avoid error message in vscode
+const puppeteer = require('puppeteer');
 
 let interval = null;
 let starttimeout;
 
-/*
- * Created with @iobroker/create-adapter v2.3.0
- */
 
-// The adapter-core module gives you access to the core ioBroker functions
-// you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 
-// Load your modules here, e.g.:
-// const fs = require("fs");
 
 class DropsWeather extends utils.Adapter {
 	/**
@@ -29,12 +22,9 @@ class DropsWeather extends utils.Adapter {
 			name: 'drops-weather',
 		});
 
-		this.drops;
+		this.baseUrl = 'https://www.meteox.com/en-gb/city/';
 
 		this.on('ready', this.onReady.bind(this));
-		//this.on('stateChange', this.onStateChange.bind(this));
-		// this.on('objectChange', this.onObjectChange.bind(this));
-		// this.on('message', this.onMessage.bind(this));
 		this.on('unload', this.onUnload.bind(this));
 	}
 	//----------------------------------------------------------------------------------------------------
@@ -42,37 +32,13 @@ class DropsWeather extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	async onReady() {
-		// Initialize your adapter here
-		// The adapters config (in the instance object everything under the attribute "native") is accessible via
-		// this.config:
-		//	this.log.info('config option1: ' + this.config.option1);
-		/*
-		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-		*/
 
-		// use system configuration or user defined location
-		//await this.getLocation();
 		await this.getLanguage();
 
-		this.drops = axios.create({
-			baseURL: `https://www.drops.live/de-de/city/`,
-			//insecureHTTPParser: true,
-			timeout: 15000,
-			headers: {
-				'User-Agent': 'Mozilla',
-			},
-		});
-
-		// wait some time, because getting system configuration location take some time
-		// not really a smart way just to wait, but how can it be done ?
 		starttimeout = setTimeout(() => {
 			if (this.config.citycode === null || this.config.citycode === '') {
 				this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
 			} else {
-				// @ts-ignore
-				this.log.info('Reading data from :  ' + this.drops.defaults.baseURL + this.config.citycode);
 				this.readDataFromServer();
 			}
 		}, 2000);
@@ -83,7 +49,7 @@ class DropsWeather extends utils.Adapter {
 			} else {
 				this.readDataFromServer();
 			}
-		}, 5 * 60 * 1000);
+		}, 1000 * 60 * 5); // alle 5 min
 	}
 
 	//----------------------------------------------------------------------------------------------------
@@ -92,11 +58,17 @@ class DropsWeather extends utils.Adapter {
 			this.log.debug('getting system language');
 			this.getForeignObject('system.config', (err, state) => {
 				if (err || state === undefined || state === null || state.common.language === '') {
-					this.log.warn(`no language set in system configuration of ioBroker`);
+					this.log.warn(`no language set in system configuration of ioBroker set to EN`);
+					dayjs.locale('en');
 				} else {
 					this.log.debug(state.common.language);
-					if (state.common.language === 'de') dayjs.locale('de');
-					else dayjs.locale('en');
+					if (state.common.language === 'de') {
+						dayjs.locale('de');
+						this.baseUrl = 'https://www.meteox.com/de-de/city/';
+					}
+					else {
+						dayjs.locale('en');
+					}
 				}
 			});
 		} catch (error) {
@@ -105,60 +77,108 @@ class DropsWeather extends utils.Adapter {
 	}
 	//----------------------------------------------------------------------------------------------------
 	async readDataFromServer() {
+
+		const url = this.baseUrl + this.config.citycode;
+
+		this.log.debug('Reading data from : ' + url);
+
+		let weatherdataFound = false;
+
+		const browser = await puppeteer.launch({
+			headless: true,
+			ignoreHTTPSErrors: true,
+			args: [
+				"--no-sandbox",
+				"--disable-setuid-sandbox",
+				"--disable-dev-shm-usage",
+				"--disable-accelerated-2d-canvas",
+				"--no-first-run",
+				"--no-zygote",
+				"--single-process",
+				"--disable-gpu",
+				"--ignore-certificate-errors",
+			],
+		});
+
 		try {
-			// @ts-ignore
-			if (dayjs.locale() === 'en') this.drops.defaults.baseURL = 'https://www.drops.live/en-gb/city/';
-			// @ts-ignore
-			this.log.debug('Reading data from : ' + this.drops.defaults.baseURL + this.config.citycode);
-			let weatherdataFound = false;
 
-			// @ts-ignore
-			const response = await this.drops.get(encodeURI(this.config.citycode), { responseType: 'blob' });
-			if (response.status == 200) {
-				this.log.debug('Ok. Parsing data...');
-				// if GET was successful...
-				const $ = cheerio.load(response.data);
+			const page = await browser.newPage();
 
-				$('.text-sm.bg-sub-menu-bg.py-1.px-2.w-full.rounded-lg.leading-6').each((_, e) => {
-					const row = $(e).text();
-					this.log.debug(row);
-					this.setStateAsync('data_1h.labeltext', { val: row, ack: true });
-				});
+			await page.setUserAgent(
+				'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+			);
 
-				$('script').each((_, e) => {
-					const row = $(e).text();
-					// series data found ?
-					if (row.indexOf('series') != -1) {
-						this.log.debug('weatherData found');
-						let data = row.substring(row.indexOf('series'));
+			await page.goto(url, {
+				waitUntil: 'domcontentloaded', // Warten, bis die Seite fertig geladen ist
+			});
 
-						if (data.indexOf('}}},') != -1) {
-							weatherdataFound = true;
-							data = data.substring(7, data.indexOf('}}},') + 3);
-							data = data.replace('2h', 'data2h');
-							data = data.replace('24h', 'data24h');
+			const scriptContents = await page.evaluate(() => {
+				// @ts-ignore
+				const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
+				labeltext = element ? element.textContent : 'Kein Text gefunden';
 
-							const dataJSON = JSON.parse(data);
-							this.log.debug('creating 5 min states');
-
-							this.createStateData(dataJSON.data2h.data, 'data_5min');
-							this.log.debug('creating 1 hour states');
-							this.createStateData(dataJSON.data24h.data, 'data_1h');
-						} else this.log.debug('end of data in series NOT found');
+				const scripts = document.querySelectorAll('script'); // ja das ist korrekt so
+				for (let script of scripts) {
+					if (script.textContent.includes('RainGraph.create({')) {
+						return script.textContent.split("\n");
 					}
-				});
+				}
+				return null;
+			});
+
+			const labeltext = await page.evaluate(() => {
+				// @ts-ignore
+				const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
+				labeltext = element ? element.textContent : 'Kein Text gefunden';
+				return labeltext;
+			});
+
+			this.setStateAsync('data_1h.labeltext', { val: labeltext, ack: true });
+
+			for (const scriptContent of scriptContents) {
+				if (scriptContent.includes('series')) {
+					console.log('weatherData found');
+					let data = scriptContent.substring(scriptContent.indexOf('series'));
+
+					if (data.includes('}}},')) {
+						weatherdataFound = true;
+						data = data.substring(7, data.indexOf('}}},') + 3);
+						data = data.replace('2h', 'data2h');
+						data = data.replace('24h', 'data24h');
+
+						const dataJSON = JSON.parse(data);
+						console.log('creating 5 min states');
+						this.createStateData(dataJSON.data2h.data, 'data_5min');
+
+						console.log('creating 1 hour states');
+						this.createStateData(dataJSON.data24h.data, 'data_1h');
+					} else {
+						console.log('end of data in series NOT found');
+					}
+				}
 			}
+
 			if (!weatherdataFound) {
 				this.log.warn('no weatherData found in HTML');
 			}
 		} catch (error) {
 			this.log.warn(error);
 		}
+		finally {
+			this.log.debug('destroy browser');
+			await browser.close();
+		}
 	}
+
+	splitByNewline(inputString) {
+		return inputString.split("\n");
+	}
+
 	//----------------------------------------------------------------------------------------------------
 	async createStateData(data, channel) {
 		try {
 			let JSONdata_rain = [];
+			let JSONdata_echart = [];
 			let raindata = [];
 			let isRainingNow = false;
 			let rainStartsAt = '-1';
@@ -169,6 +189,7 @@ class DropsWeather extends utils.Adapter {
 			//	this.log.info(JSON.stringify(data));
 
 			if (data[0].precipitationrate > 0) isRainingNow = true;
+
 			this.setStateAsync(channel + '.isRainingNow', { val: isRainingNow, ack: true });
 
 			await this.setStateAsync(channel + '.timestamp', { val: data[0].time, ack: true });
@@ -178,27 +199,43 @@ class DropsWeather extends utils.Adapter {
 				raindata.push(data[i].precipitationrate);
 
 				const item_rain = {};
+				const item_rain_echart = {};
 
+				const dat = data[i].time;
 				const date = dayjs(data[i].time);
+
+				dayjs.extend(utc);
+				const timestamp = dayjs.utc(data[i].time).valueOf();
 
 				if (rainStartsAt == '-1')
 					if (data[i].precipitationrate > 0) {
 						rainStartsAt = date.format('YYYY-MM-DDTHH:mm:ssZ');
-						rainStartAmount = data[i].c;
+						rainStartAmount = 0;
+						if (data[i].c != undefined) {
+							rainStartAmount = data[i].c;
+						}
 					}
 				//this.log.debug(date.format('HH:mm').toString());
 
 				item_rain['label'] = date.format(dateformat).toString();
 				item_rain['value'] = data[i].precipitationrate.toString();
 				JSONdata_rain.push(item_rain);
+
+				item_rain_echart['ts'] = timestamp;
+				item_rain_echart['val'] = data[i].precipitationrate;
+				JSONdata_echart.push(item_rain_echart);
+
+
 			}
 			JSONdata_rain = JSON.parse(JSON.stringify(JSONdata_rain));
+			JSONdata_echart = JSON.parse(JSON.stringify(JSONdata_echart));
 
 			raindata = JSON.parse(JSON.stringify(raindata));
 
 			this.log.debug(`Rain (${channel}): ` + JSON.stringify(JSONdata_rain));
 
 			await this.setStateAsync(channel + '.chartRain', { val: JSON.stringify(JSONdata_rain), ack: true });
+			await this.setStateAsync(channel + '.echartRain', { val: JSON.stringify(JSONdata_echart), ack: true });
 			await this.setStateAsync(channel + '.raindata', { val: JSON.stringify(raindata), ack: true });
 			await this.setStateAsync(channel + '.rainStartsAt', { val: rainStartsAt, ack: true });
 			await this.setStateAsync(channel + '.startRain', { val: rainStartAmount, ack: true });
@@ -213,10 +250,6 @@ class DropsWeather extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
-			// Here you must clear all timeouts or intervals that may still be active
-			// clearTimeout(timeout1);
-			// clearTimeout(timeout2);
-			// ...
 			clearInterval(interval);
 			clearTimeout(starttimeout);
 			callback();
