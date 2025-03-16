@@ -116,15 +116,23 @@
 			"pl": "Czytanie prognozy deszczu z drops.live",
 			"zh-cn": "从drops.live读取降雨预报"
 		},
-		"authors": ["inbux <inbux.development@gmail.com>"],
-		"keywords": ["weather", "rain", "forecast"],
+		"authors": [
+			"inbux <inbux.development@gmail.com>",
+			"mcm1957 <iobroker-community-adapters@gmx.de>",
+			"iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
+		],	  
+		"keywords": [
+			"weather", 
+			"rain", 
+			"forecast"
+		],
 		"license": "MIT",
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
 		"icon": "drops-weather.png",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/inbux/ioBroker.drops-weather/main/admin/drops-weather.png",
-		"readme": "https://github.com/inbux/ioBroker.drops-weather/blob/main/README.md",
+		"extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.drops-weather/main/admin/drops-weather.png",
+		"readme": "https://github.com/iobroker-community-adapters/ioBroker.drops-weather/blob/main/README.md",
 		"loglevel": "info",
 		"mode": "daemon",
 		"type": "weather",
@@ -136,12 +144,12 @@
 		},
 		"dependencies": [
 			{
-				"js-controller": ">=3.3.22"
+			  "js-controller": ">=6.0.11"
 			}
 		],
 		"globalDependencies": [
 			{
-				"admin": ">=5.1.13"
+			  "admin": ">=6.17.14"
 			}
 		]
 	},
