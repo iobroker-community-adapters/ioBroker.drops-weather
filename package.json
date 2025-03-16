@@ -4,21 +4,26 @@
   "description": "Reading rain forecast from drops.live",
   "author": {
     "name": "inbux",
-    "email": "44289314+inbux@users.noreply.github.com"
+    "email": "inbux.development@gmail.com"
   },
-  "homepage": "https://github.com/inbux/ioBroker.drops-weather",
+  "contributors": [
+    "iobroker-community-adapters <iobroker-community-adapters@gmx.de>",
+    "mcm1957 <iobroker-community-adapters@gmx.de>"
+  ],
+  "homepage": "https://github.com/iobroker-community-adapters/ioBroker.drops-weather",
   "license": "MIT",
   "keywords": [
+    "ioBroker",
     "weather",
     "rain",
     "forecast"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/inbux/ioBroker.drops-weather.git"
+    "url": "https://github.com/inbiobroker-community-adapters/ioBroker.drops-weather.git"
   },
   "engines": {
-    "node": ">= 14"
+    "node": ">= 20"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.3",
@@ -75,7 +80,7 @@
     "release": "release-script"
   },
   "bugs": {
-    "url": "https://github.com/inbux/ioBroker.drops-weather/issues"
+    "url": "https://github.com/iobroker-community-adapters/ioBroker.drops-weather/issues"
   },
   "readmeFilename": "README.md"
 }

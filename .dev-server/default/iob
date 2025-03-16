@@ -1,2 +1,0 @@
-#!/usr/bin/env node
-require('/home/inbux/ioBroker-dev/ioBroker.drops-weather/.dev-server/default/node_modules/iobroker.js-controller/lib/setup').execute();
