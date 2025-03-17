@@ -1,22 +1,9 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.0.0-alpha.1",
+    "version": "1.0.0",
     "news": {
-      "1.0.0-alpha.1": {
-        "en": "adapter has been migrated to iobroker-community-adapters organisation\nadapter requires node.js 20.x, js-controller 6 and admin 7 now.\naxios has been replaced by puppeteer\ndependencies have been updated",
-        "de": "adapter wurde zu iobroker-community-adapter organisation migriert\nadapter benötigt jetzt node.js 20.x, js-controller 6 und admin 7.\naxios wurde durch puppenspieler ersetzt\nabhängigkeiten wurden aktualisiert",
-        "ru": "адаптер был перенесен в организацию адаптации сообщества йоброкеров\nадаптер требует node.js 20.x, js-контроллер 6 и админ 7.\nаксиос был заменен кукловодом\nобновлены зависимости",
-        "pt": "adaptador foi migrado para iobroker-community-adapters organização\nadaptador requer node.js 20.x, js-controller 6 e admin 7 agora.\naxios foi substituído por puppeteer\ndependências foram atualizadas",
-        "nl": "adapter is gemigreerd naar iobroker-community-adapters organisatie\nadapter vereist node.js 20.x, js-controller 6 en admin 7.\naxios is vervangen door poppenspeler\nafhankelijkheden zijn bijgewerkt",
-        "fr": "adaptateur a été migré vers iobroker-community-adaptateurs organisation\nadaptateur nécessite node.js 20.x, js-controller 6 et admin 7 maintenant.\naxios a été remplacé par un marionnettiste\nles dépendances ont été mises à jour",
-        "it": "l'adattatore è stato migrato all'organizzazione iobroker-community-adapters\nadattatore richiede node.js 20.x, js-controller 6 e admin 7 ora.\naxios è stato sostituito da burattinaio\nle dipendenze sono state aggiornate",
-        "es": "adaptador ha sido migrado a la organización de ibroker-community-adapters\nadaptador requiere node.js 20.x, js-controller 6 y admin 7 ahora.\naxios ha sido reemplazado por titiritero\nlas dependencias se han actualizado",
-        "pl": "adapter został przeniesiony do organizacji adapterów iobroker- community-\nadapter wymaga node.js 20.x, js- kontroler 6 i admin 7 teraz.\naksjos został zastąpiony przez lalkarz\nuzależnienia zostały zaktualizowane",
-        "uk": "перехідник мігрований до організації iobroker-community-adapters\nадаптер вимагає node.js 20.x, js-controller 6 і admin 7 тепер.\naxios був замінений цуценя\nбуло оновлено залежності",
-        "zh-cn": "适配器已经迁移到 io 经纪人-社区适应者组织\n适配器需要节点.js 20.x,js-controller 6和admin 7现在.\naxios已经被傀儡取代了\n依赖关系已更新"
-      },
-      "1.0.0-alpha.0": {
+      "1.0.0": {
         "en": "adapter has been migrated to iobroker-community-adapters organisation\nadapter requires node.js 20.x, js-controller 6 and admin 7 now.\naxios has been replaced by puppeteer\ndependencies have been updated",
         "de": "adapter wurde zu iobroker-community-adapter organisation migriert\nadapter benötigt jetzt node.js 20.x, js-controller 6 und admin 7.\naxios wurde durch puppenspieler ersetzt\nabhängigkeiten wurden aktualisiert",
         "ru": "адаптер был перенесен в организацию адаптации сообщества йоброкеров\nадаптер требует node.js 20.x, js-контроллер 6 и админ 7.\nаксиос был заменен кукловодом\nобновлены зависимости",
