@@ -8,36 +8,65 @@
 			"items": {
 				"infoText1": {
 					"type": "staticText",
-					"text": "Please visit drops.live website and enter your city or your location to get your city code in the URL:"
+					"text": "Please visit drops.live website and enter your city or your location to get your city code in the URL:",
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
 				},
 				"infoLink1": {
 					"type": "staticLink",
 					"label": "https://www.drops.live",
 					"href": "https://www.drops.live",
-					"newLine": true
+					"newLine": true,
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
 				},
 				"infoText2": {
 					"type": "staticText",
 					"text": "For more detailed instructions, please visit the website of this adapter:",
-					"newLine": true
+					"newLine": true,
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
 				},
 				"infoLink3": {
 					"type": "staticLink",
 					"label": "https://github.com/inbux/ioBroker.drops-weather",
 					"href": "https://github.com/inbux/ioBroker.drops-weather",
-					"newLine": true
+					"newLine": true,
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
 				},
 				"locationText": {
 					"type": "staticText",
 					"text": "Please enter your city code from www.drops.live url (e.g. for 'Berlin' => 6573)",
-					"newLine": true
+					"newLine": true,
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
 				},
-
 				"citycode": {
 					"min": 1,
 					"type": "number",
 					"label": "City code",
-					"newLine": true
+					"newLine": true,
+					"xs": 12,
+					"sm": 10,
+					"md": 8,
+					"lg": 6,
+					"xl": 4
 				}
 			}
 		}
