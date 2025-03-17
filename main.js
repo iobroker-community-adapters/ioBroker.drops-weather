@@ -167,10 +167,10 @@ class DropsWeather extends utils.Adapter {
 		finally {
 			this.log.debug('destroy browser');
 			const pages = await browser.pages();
-      			for (let i = 0; i < pages.length; i++) {
-				await pages[i].close();
-      			}  
-      			await browser.close();
+      for (let i = 0; i < pages.length; i++) {
+        await pages[i].close();
+      }  
+      await browser.close();
 		}
 	}
 
