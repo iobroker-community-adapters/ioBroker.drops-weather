@@ -65,7 +65,8 @@
         "it": "aggiunto effettivo Pioggia\nlinguaggio del sistema di lettura per la localizzazione dei giorni feriali\npioggia cambiataStarts A volte\nha cambiato la maggior parte dei messaggi di registro per debug per mantenere pulitore di registro\naggiornato README.md",
         "es": "total Rain\nleer el lenguaje del sistema para la localización de los días de semana\ncambio de lluvia A la hora\ncambió la mayoría de los mensajes de registro para depurar\nactualizado README.md",
         "pl": "dodać deszcz\njęzyk programowania na tydzień\nzmieniła się gwiazda deszczu. Być może\nzmienione wiadomości do debugowania, aby zachować czysty logujący\nrEADME.md",
-        "zh-cn": "实际增加 Rain\n阅读每周当地化的系统语言\n雨量变化 时装\n多数逻辑信息都改变,以保持更清洁的逻辑\n修订的中小企业"
+        "zh-cn": "实际增加 Rain\n阅读每周当地化的系统语言\n雨量变化 时装\n多数逻辑信息都改变,以保持更清洁的逻辑\n修订的中小企业",
+        "uk": "Додано фактично\nМова системи читання для локалізації будних днів\nЗмінено дощу на часову позначку\nзмінив більшість повідомлень про журнал на налагодження, щоб зберегти чистіше журналу\nОновлений readme.md"
       },
       "0.2.0": {
         "en": "added use of system configuration for gps coordinates\naxios timeout increased\nchanged some logs from error to warn\nadded some more error handling and log messages\nfixed problem with city containing umlauts",
@@ -77,7 +78,8 @@
         "it": "uso aggiunto della configurazione di sistema per coordinate gps\ntimeout assios aumentato\nha cambiato alcuni registri da errore per avvertire\naggiunto alcuni errori di gestione e messaggi di registro\nproblema fisso con la città contenente umlauts",
         "es": "uso añadido de la configuración del sistema para coordenadas gps\naumento del tiempo de axios\ncambió algunos registros de error a advertir\nañadido algunos mensajes de error y registro\nproblema fijo con ciudad que contiene umlauts",
         "pl": "dodanie konfiguracji systemu dla współrzędnych gps\nczas axisowy wzrastał\nzmieniło się to z błędu, aby ostrzec ostrzeżenie\ndodał więcej błędów i wiadomości logicznych\nstały problem z miastem zawierającym umlauty",
-        "zh-cn": "b. 增加使用系统配置坐标\na 时间缩短\n从错误改为战争的一些逻辑变化\n增加一些错误处理和逻辑信息\n城市的固定问题"
+        "zh-cn": "b. 增加使用系统配置坐标\na 时间缩短\n从错误改为战争的一些逻辑变化\n增加一些错误处理和逻辑信息\n城市的固定问题",
+        "uk": "Додано використання системної конфігурації для координат GPS\nЧас очікування Axios збільшувався\nзмінив деякі журнали від помилки на попередження\nДодано ще кілька повідомлень про помилки та журнал\nВиправлена ​​проблема з містом, що містить Umlauts"
       },
       "0.1.1": {
         "en": "",
@@ -102,7 +104,8 @@
       "it": "Drops Weather",
       "es": "Drops Weather",
       "pl": "Drops Weather",
-      "zh-cn": "Drops Weather"
+      "zh-cn": "Drops Weather",
+      "uk": "Падає погода"
     },
     "desc": {
       "en": "Reading rain forecast from drops.live",
@@ -114,7 +117,8 @@
       "it": "Lettura delle previsioni di pioggia da drops.live",
       "es": "Lectura del pronóstico de lluvia de drops.live",
       "pl": "Czytanie prognozy deszczu z drops.live",
-      "zh-cn": "从drops.live读取降雨预报"
+      "zh-cn": "从drops.live读取降雨预报",
+      "uk": "Читання прогнозу дощу від крапель.Live"
     },
     "authors": [
       "inbux <inbux.development@gmail.com>",
@@ -146,13 +150,13 @@
       {
         "js-controller": ">=6.0.11"
       }
-	  ],
-	  "globalDependencies": [
+    ],
+    "globalDependencies": [
       {
         "admin": ">=6.17.14"
       }
-	  ]
-	},
+    ]
+  },
   "native": {
     "citycode": ""
   },
