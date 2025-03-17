@@ -1,72 +1,20 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "0.3.1",
+    "version": "1.0.0-alpha.0",
     "news": {
-      "0.3.0": {
-        "en": "breaking changes in drops.live homepage (2024-02-05)\n\n* parsing of drops.live homepage updated\n* GPS position is not longer supported on the website, added city code in configuration\n* removed temperture because this data is not longer available\n* updated readme",
-        "de": "änderungen in drop.live homepage (2024-02-05)\n\n* parsing von drops.live homepage aktualisiert\n* GPS-Position wird nicht länger auf der Website unterstützt, Stadtcode in Konfiguration hinzugefügt\n* entfernte temperatur, da diese daten nicht mehr verfügbar sind\n* aktualisiertes lesezeichen",
-        "ru": "нарушая изменения в drops.live домашней странице (2024-02-05)\n\n* рейтинг drops.live homepage обновлен\n* Позиция GPS больше не поддерживается на сайте, добавлен городской код в конфигурации\n* удалена температура, потому что эти данные больше не доступны\n* обновленный читаемый",
-        "pt": "quebrando mudanças na página inicial do drop.live (2024-02-05)\n\n* parsing de drops.live homepage atualizado\n* A posição do GPS não é mais suportada no site, adicionou o código da cidade na configuração\n* a moderação removida porque esses dados não estão mais disponíveis\n* readme atualizado",
-        "nl": "break changes in drops.live homepage (2024-02-05)\n\n* ontleden van drops.live homepage bijgewerkt\n* GPS positie wordt niet langer ondersteund op de website, toegevoegd stad code in configuratie\n* verwijderde temperatuur omdat deze gegevens niet langer beschikbaar zijn\n* bijgewerkt readme",
-        "fr": "casser les changements dans drops.live page d'accueil (2024-02-05)\n\n* analyse de la page d'accueil drops.live mise à jour\n* La position GPS n'est plus prise en charge sur le site, le code de ville ajouté dans la configuration\n* température enlevée parce que ces données ne sont plus disponibles\n* mise à jour",
-        "it": "cambiamenti di rottura nella homepage drops.live (2024-02-05)\n\n* parsing di drops.live homepage aggiornato\n* La posizione GPS non è più supportata sul sito web, aggiunto codice città in configurazione\n* tempertura eliminata perché questi dati non sono più disponibili\n* lettura aggiornata",
-        "es": "rompiendo cambios en drops.live homepage (2024-02-05)\n\n* parsing of drops.live homepage updated\n* La posición GPS ya no es compatible en el sitio web, código de ciudad añadido en configuración\n* retirada de temperamento porque estos datos ya no están disponibles\n* readme actualizado",
-        "pl": "łamanie zmian w drops.live homepage (2024- 02- 05)\n\n* parsing of drops.live homepage zaktualizowane\n* Pozycja GPS nie jest dłużej obsługiwany na stronie internetowej, dodany kod miasta w konfiguracji\n* usunięty temperament, ponieważ dane te nie są już dostępne\n* zaktualizowany readme",
-        "uk": "перерву змін в краплі.live homepage (2024-02-05)\n\n* оновлення сайту\n* GPS-навігація не підтримується на сайті, додано код міста в конфігурації\n* видалити загартування, оскільки дані не доступні\n* оновлений зчитувач",
-        "zh-cn": "突破 drops.live 主页(2024-02-05)\n\n* 解析滴滴. live 主页更新\n* 在网站上不再支持GPS位置, 在配置中添加城市代码\n* 已消除温和度,因为此数据不再可用\n* 更新的读数"
-      },
-      "0.2.3": {
-        "en": "updated dependencies",
-        "de": "aktualisierte abhängigkeiten",
-        "ru": "обновленные зависимости",
-        "pt": "dependências atualizadas",
-        "nl": "bijgewerkte afhankelijkheden",
-        "fr": "dépendances actualisées",
-        "it": "dipendenze aggiornate",
-        "es": "dependencias actualizadas",
-        "pl": "zaktualizowane zależności",
-        "uk": "оновлені залежності",
-        "zh-cn": "更新的依赖关系"
-      },
-      "0.2.2": {
-        "en": "changed URL from drops.live to www.drops.live (thanks to Marc-Berg)\nsmall changes because of axios update\nchanged units to mm/h",
-        "de": "geänderte URL von drop.live bis www.drops.live (Danke an Marc-Berg)\nkleine änderungen wegen axios update\ngeänderte einheiten in mm/h",
-        "ru": "изменен URL с drops.live на www.drops.live (благодаря Марку-Бергу)\nнебольшие изменения из-за обновления аксиоса\nизмененные единицы на мм/ч",
-        "pt": "uRL alterada de gotas.live para www.drops.live (Obrigado a Marc-Berg)\npequenas mudanças por causa da atualização de axios\nunidades alteradas para mm/h",
-        "nl": "veranderd URL van drops.live naar www.drops.live (met dank aan Marc-Berg)\nkleine veranderingen als gevolg van axios update\nveranderd eenheden naar mm/h",
-        "fr": "changer l'URL de drops.live vers www.drops.live (merci à Marc-Berg)\npetits changements en raison de la mise à jour axios\nchangement d ' unités en mm/h",
-        "it": "modificato URL da drop.live a www.drops.live (grazie a Marc-Berg)\npiccoli cambiamenti a causa di aggiornamento assio\nunità modificate in mm/h",
-        "es": "cambió URL de drops.live a www.drops.live (gracias a Marc-Berg)\npequeños cambios debido a la actualización de axios\nunidades modificadas a mm/h",
-        "pl": "zmieniony adres URL z drops.live na www.drops.live (dzięki Marc- Berg)\nniewielkie zmiany spowodowane aktualizacją aksjosu\nzmiana jednostek na mm / h",
-        "uk": "змінено URL з крапель.live на www.drops.live (до Марка-Берг)\nнезначні зміни через оновлення осей\nзмінені юніти до мм/год",
-        "zh-cn": "将 URL 从 drops. live 更改为 www.drops. live (感谢马克-伯格)\n由于 轴更新导致的小变化\n单位改为毫米/小时"
-      },
-      "0.2.1": {
-        "en": "added actualRain\nreading system language for weekdays localization\nchanged rainStartsAt to timestamp\nchanged most log messages to debug to keep log cleaner\nupdated README.md",
-        "de": "tatsächlich Regen\nlesesystemsprache für wochentage lokalisierung\ngewechselt RegenStarts Zur Zeitstempel\ndie meisten log-nachrichten zum debug geändert, um log cleaner zu halten\naktualisiert README.md",
-        "ru": "добавлены фактические Дождь\nязык системы чтения для локализации будни\nизменено rainStarts В timetamp\nизменил большинство лог-сообщений, чтобы отладить лог чище\nобновленный README.md",
-        "pt": "adicionado real Chuva de chuva\nlinguagem do sistema de leitura para localização de dias de semana\nmudança de chuva Estrelas Aos tempos\nmudou a maioria das mensagens de log para debug para manter o limpador de log\natualizado README.md",
-        "nl": "voegde echt toe Rain\nlezende taal voor weekdagen\nveranderde regenstart Op tijd\nverwisselde de meeste logboekberichten om te debuggen om logopruimen te bewaren\nvertaling:",
-        "fr": "effectif Rain\nla langue du système de lecture pour la localisation des jours de semaine\nchangement de pluviosité À l'heure\nchangé la plupart des messages de journal à debug pour garder l'aspirateur de journal\nmise à jour de README.md",
-        "it": "aggiunto effettivo Pioggia\nlinguaggio del sistema di lettura per la localizzazione dei giorni feriali\npioggia cambiataStarts A volte\nha cambiato la maggior parte dei messaggi di registro per debug per mantenere pulitore di registro\naggiornato README.md",
-        "es": "total Rain\nleer el lenguaje del sistema para la localización de los días de semana\ncambio de lluvia A la hora\ncambió la mayoría de los mensajes de registro para depurar\nactualizado README.md",
-        "pl": "dodać deszcz\njęzyk programowania na tydzień\nzmieniła się gwiazda deszczu. Być może\nzmienione wiadomości do debugowania, aby zachować czysty logujący\nrEADME.md",
-        "zh-cn": "实际增加 Rain\n阅读每周当地化的系统语言\n雨量变化 时装\n多数逻辑信息都改变,以保持更清洁的逻辑\n修订的中小企业",
-        "uk": "Додано фактично\nМова системи читання для локалізації будних днів\nЗмінено дощу на часову позначку\nзмінив більшість повідомлень про журнал на налагодження, щоб зберегти чистіше журналу\nОновлений readme.md"
-      },
-      "0.2.0": {
-        "en": "added use of system configuration for gps coordinates\naxios timeout increased\nchanged some logs from error to warn\nadded some more error handling and log messages\nfixed problem with city containing umlauts",
-        "de": "verwendung der systemkonfiguration für gps-koordinaten\naxios timeout erhöht\neinige protokolle von fehler zu warn geändert\neinige weitere fehlerbehandlung und log-nachrichten hinzugefügt\nproblem mit stadt mit umlauts",
-        "ru": "добавлено использование конфигурации системы для gps координат\naxios timeout увеличилось\nизменил некоторые журналы из ошибки, чтобы предупредить\nдобавил еще некоторые ошибки обработки и лог сообщений\nфиксированная проблема с городом, содержащий umlauts",
-        "pt": "uso adicionado da configuração do sistema para coordenadas de gps\naumento do tempo de axios\nmudou alguns registros de erro para avisar\nadicionou mais algumas mensagens de manipulação de erros e log\nproblema fixo com cidade contendo umlauts",
-        "nl": "voegde gebruik van systeemconfiguratie toe voor gps-coördinaten\nquality over quantity (qoq) releases vertaling:\nveranderde logboeken van fouten om te waarschuwen\nvoegde meer fouten toe en logberichten\n_",
-        "fr": "utilisation supplémentaire de la configuration système pour les coordonnées gps\naxios timeout increased\na changé quelques logs de l'erreur pour prévenir\najouté quelques autres erreurs de manipulation et les messages journaux\nproblème fixe avec la ville contenant umlauts",
-        "it": "uso aggiunto della configurazione di sistema per coordinate gps\ntimeout assios aumentato\nha cambiato alcuni registri da errore per avvertire\naggiunto alcuni errori di gestione e messaggi di registro\nproblema fisso con la città contenente umlauts",
-        "es": "uso añadido de la configuración del sistema para coordenadas gps\naumento del tiempo de axios\ncambió algunos registros de error a advertir\nañadido algunos mensajes de error y registro\nproblema fijo con ciudad que contiene umlauts",
-        "pl": "dodanie konfiguracji systemu dla współrzędnych gps\nczas axisowy wzrastał\nzmieniło się to z błędu, aby ostrzec ostrzeżenie\ndodał więcej błędów i wiadomości logicznych\nstały problem z miastem zawierającym umlauty",
-        "zh-cn": "b. 增加使用系统配置坐标\na 时间缩短\n从错误改为战争的一些逻辑变化\n增加一些错误处理和逻辑信息\n城市的固定问题",
-        "uk": "Додано використання системної конфігурації для координат GPS\nЧас очікування Axios збільшувався\nзмінив деякі журнали від помилки на попередження\nДодано ще кілька повідомлень про помилки та журнал\nВиправлена ​​проблема з містом, що містить Umlauts"
+      "1.0.0-alpha.0": {
+        "en": "adapter has been migrated to iobroker-community-adapters organisation\nadapter requires node.js 20.x, js-controller 6 and admin 7 now.\naxios has been replaced by puppeteer\ndependencies have been updated",
+        "de": "adapter wurde zu iobroker-community-adapter organisation migriert\nadapter benötigt jetzt node.js 20.x, js-controller 6 und admin 7.\naxios wurde durch puppenspieler ersetzt\nabhängigkeiten wurden aktualisiert",
+        "ru": "адаптер был перенесен в организацию адаптации сообщества йоброкеров\nадаптер требует node.js 20.x, js-контроллер 6 и админ 7.\nаксиос был заменен кукловодом\nобновлены зависимости",
+        "pt": "adaptador foi migrado para iobroker-community-adapters organização\nadaptador requer node.js 20.x, js-controller 6 e admin 7 agora.\naxios foi substituído por puppeteer\ndependências foram atualizadas",
+        "nl": "adapter is gemigreerd naar iobroker-community-adapters organisatie\nadapter vereist node.js 20.x, js-controller 6 en admin 7.\naxios is vervangen door poppenspeler\nafhankelijkheden zijn bijgewerkt",
+        "fr": "adaptateur a été migré vers iobroker-community-adaptateurs organisation\nadaptateur nécessite node.js 20.x, js-controller 6 et admin 7 maintenant.\naxios a été remplacé par un marionnettiste\nles dépendances ont été mises à jour",
+        "it": "l'adattatore è stato migrato all'organizzazione iobroker-community-adapters\nadattatore richiede node.js 20.x, js-controller 6 e admin 7 ora.\naxios è stato sostituito da burattinaio\nle dipendenze sono state aggiornate",
+        "es": "adaptador ha sido migrado a la organización de ibroker-community-adapters\nadaptador requiere node.js 20.x, js-controller 6 y admin 7 ahora.\naxios ha sido reemplazado por titiritero\nlas dependencias se han actualizado",
+        "pl": "adapter został przeniesiony do organizacji adapterów iobroker- community-\nadapter wymaga node.js 20.x, js- kontroler 6 i admin 7 teraz.\naksjos został zastąpiony przez lalkarz\nuzależnienia zostały zaktualizowane",
+        "uk": "перехідник мігрований до організації iobroker-community-adapters\nадаптер вимагає node.js 20.x, js-controller 6 і admin 7 тепер.\naxios був замінений цуценя\nбуло оновлено залежності",
+        "zh-cn": "适配器已经迁移到 io 经纪人-社区适应者组织\n适配器需要节点.js 20.x,js-controller 6和admin 7现在.\naxios已经被傀儡取代了\n依赖关系已更新"
       }
     },
     "titleLang": {
