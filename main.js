@@ -84,6 +84,7 @@ class DropsWeather extends utils.Adapter {
 
         const browser = await puppeteer.launch({
             headless: true,
+            defaultViewport: null,
             ignoreHTTPSErrors: true,
             executablePath: '/usr/bin/chromium',
             args: [
@@ -98,6 +99,8 @@ class DropsWeather extends utils.Adapter {
                 '--ignore-certificate-errors',
             ],
         });
+
+        this.log.debug(`browser launched, creacting new page ...`);
 
         try {
             const page = await browser.newPage();
