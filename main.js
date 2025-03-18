@@ -106,10 +106,12 @@ class DropsWeather extends utils.Adapter {
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             );
 
+            this.log.debug(`loading ${url}`);
             await page.goto(url, {
                 waitUntil: 'domcontentloaded', // Warten, bis die Seite fertig geladen ist
             });
 
+            this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
                 // @ts-ignore
                 const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
@@ -135,7 +137,7 @@ class DropsWeather extends utils.Adapter {
 
             for (const scriptContent of scriptContents) {
                 if (scriptContent.includes('series')) {
-                    console.log('weatherData found');
+                    this.log.debug('weatherData found');
                     let data = scriptContent.substring(scriptContent.indexOf('series'));
 
                     if (data.includes('}}},')) {
@@ -145,13 +147,13 @@ class DropsWeather extends utils.Adapter {
                         data = data.replace('24h', 'data24h');
 
                         const dataJSON = JSON.parse(data);
-                        console.log('creating 5 min states');
+                        this.log.debug('creating 5 min states');
                         this.createStateData(dataJSON.data2h.data, 'data_5min');
 
-                        console.log('creating 1 hour states');
+                        this.log.debug('creating 1 hour states');
                         this.createStateData(dataJSON.data24h.data, 'data_1h');
                     } else {
-                        console.log('end of data in series NOT found');
+                        this.log.debug('end of data in series NOT found');
                     }
                 }
             }
