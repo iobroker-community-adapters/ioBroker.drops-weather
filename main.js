@@ -85,6 +85,7 @@ class DropsWeather extends utils.Adapter {
         const browser = await puppeteer.launch({
             headless: true,
             ignoreHTTPSErrors: true,
+            executablePath: '/usr/bin/chromium',
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
