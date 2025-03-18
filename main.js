@@ -116,10 +116,11 @@ class DropsWeather extends utils.Adapter {
 
             this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
-                // @ts-ignore
-                const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
-                labeltext = element ? element.textContent : 'Kein Text gefunden';
+                // // @ts-ignore
+                // const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
+                // labeltext = element ? element.textContent : 'Kein Text gefunden';
 
+                // @ts-ignore
                 const scripts = document.querySelectorAll('script'); // ja das ist korrekt so
                 for (let script of scripts) {
                     if (script.textContent.includes('RainGraph.create({')) {
@@ -128,6 +129,7 @@ class DropsWeather extends utils.Adapter {
                 }
                 return null;
             });
+            this.log.debug(`got scriptContents "${JSON.stringify(scriptContents)}"`);
 
             const labeltext = await page.evaluate(() => {
                 // @ts-ignore
