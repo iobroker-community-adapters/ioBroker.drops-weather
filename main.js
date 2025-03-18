@@ -88,14 +88,14 @@ class DropsWeather extends utils.Adapter {
 //            ignoreHTTPSErrors: true,
             executablePath: '/usr/bin/chromium-browser',
             args: [
-                // '--no-sandbox',
-                // '--disable-setuid-sandbox',
-                // '--disable-dev-shm-usage',
-                // '--disable-accelerated-2d-canvas',
-                // '--no-first-run',
-                // '--no-zygote',
-                // '--single-process',
-                // '--disable-gpu',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process',
+                '--disable-gpu',
                 '--ignore-certificate-errors',
             ],
         });
@@ -136,6 +136,7 @@ class DropsWeather extends utils.Adapter {
                 return labeltext;
             });
 
+            this.log.debug(`got labeltext "${labeltext}"`);
             this.setStateAsync('data_1h.labeltext', { val: labeltext, ack: true });
 
             for (const scriptContent of scriptContents) {
