@@ -14,7 +14,7 @@ const platform = os.platform();
 console.log(`installation running on ${platform} / ${arch}`);
 console.log('');
 
-if (!additionalPackages[arch]) {
+if (platform !== 'linux' || !additionalPackages[arch]) {
     console.log('NO additonal installation required');
     process.exit(0);
 }
