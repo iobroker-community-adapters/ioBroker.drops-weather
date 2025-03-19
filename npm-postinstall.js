@@ -26,7 +26,7 @@ const packages = additionalPackages[arch];
 for (const pkg of packages) {
     console.log(`installing ${pkg}...\n`);
 
-    const res = spawnSync(`sudo apt install ${pkg}`);
+    const res = spawnSync('sh', ['-c', `sudo apt install ${pkg}`]);
     console.log(`${res.stdout}`);
     console.log(`${res.stderr}`);
 
