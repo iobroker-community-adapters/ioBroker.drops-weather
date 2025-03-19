@@ -6,7 +6,8 @@ const utc = require('dayjs/plugin/utc');
 const puppeteer = require('puppeteer');
 
 let interval = null;
-let starttimeout;
+let starttimeout = null;
+let watchdog = null;
 
 const utils = require('@iobroker/adapter-core');
 
@@ -32,7 +33,7 @@ class DropsWeather extends utils.Adapter {
     async onReady() {
         await this.getLanguage();
 
-        starttimeout = setTimeout(() => {
+        starttimeout = this.setTimeout(() => {
             if (this.config.citycode === null || this.config.citycode === '') {
                 this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
             } else {
@@ -40,7 +41,7 @@ class DropsWeather extends utils.Adapter {
             }
         }, 2000);
 
-        interval = setInterval(
+        interval = this.setInterval(
             () => {
                 if (this.config.citycode === null || this.config.citycode === '') {
                     clearInterval(interval);
@@ -82,26 +83,41 @@ class DropsWeather extends utils.Adapter {
 
         let weatherdataFound = false;
 
-        const browser = await puppeteer.launch({
-            headless: true,
-            defaultViewport: null,
-//            ignoreHTTPSErrors: true,
-//            executablePath: '/usr/bin/chromium-browser',
-            executablePath: '/usr/bin/chromium-shell',
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-accelerated-2d-canvas',
-                '--no-first-run',
-                '--no-zygote',
-                '--single-process',
-                '--disable-gpu',
-                '--ignore-certificate-errors',
-            ],
-        });
+        watchdog = this.setTimeout(() => {
+            this.log.error('timeout connecting to brower');
+            this.disable();
+        }, 10_000);
 
-        this.log.debug(`browser launched, creacting new page ...`);
+        let browser;
+        try {
+            browser = await puppeteer.launch({
+                headless: true,
+                defaultViewport: null,
+                //            ignoreHTTPSErrors: true,
+                //            executablePath: '/usr/bin/chromium-browser',
+                executablePath: '/usr/bin/chromium-shell',
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-accelerated-2d-canvas',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    '--disable-gpu',
+                    '--ignore-certificate-errors',
+                ],
+            });
+        } catch (e) {
+            this.log.error(`error launching browser- ${e}`);
+            this.disable();
+            return;
+        }
+
+        this.clearTimeout(watchdog);
+        watchdog = null;
+
+        this.log.debug(`browser launched, creating new page ...`);
 
         try {
             const page = await browser.newPage();
@@ -264,8 +280,9 @@ class DropsWeather extends utils.Adapter {
      */
     onUnload(callback) {
         try {
-            clearInterval(interval);
-            clearTimeout(starttimeout);
+            this.clearInterval(interval);
+            this.clearTimeout(starttimeout);
+            this.clearTimeout(this.watchdog);
             callback();
         } catch (e) {
             callback();
