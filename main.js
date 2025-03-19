@@ -1,4 +1,6 @@
 'use strict';
+const os = require('node:os');
+
 const dayjs = require('dayjs');
 require('dayjs/locale/de');
 const utc = require('dayjs/plugin/utc');
@@ -31,6 +33,47 @@ class DropsWeather extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
+
+        if (!this.config.browserMode) {
+            this.config.browserMode = 'automatic';
+        }
+        this.log.info(`browserMode set to ${this.config.browserMode}`);
+        this.chromeExecutable = undefined;
+
+        if (this.config.browserMode === 'built-in') {
+            if (os.arch() === 'arm') {
+                this.log.error(
+                    `browser mode ${this.config.browserMode} not supported at platform ${os.platform()} / ${os.arch()}`,
+                );
+                this.disable();
+                this.terminate();
+                return;
+            }
+        } else if (this.config.browserMode === 'chromium-browser') {
+            if (os.platform() !== 'linux' || os.arch() !== 'arm') {
+                this.log.error(
+                    `browser mode ${this.config.browserMode} not supported at platform ${os.platform()} / ${os.arch()}`,
+                );
+                this.disable();
+                this.terminate();
+                return;
+            }
+            this.chromeExecutable = '/usr/bin/chromium-browser';
+        } else if (this.config.browserMode === 'external') {
+            this.chromeExecutable = this.config.browserPath;
+        } else if (this.config.browserMode === 'automatic') {
+            if (os.platform() === 'linux' && os.arch() === 'arm') {
+                this.chromeExecutable = '/usr/bin/chromium-browser';
+            }
+        } else {
+            this.log.error(`browser mode ${this.config.browserMode} not (yet) supported`);
+            this.disable();
+            this.terminate();
+            return;
+        }
+
+        this.log.info(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
+
         await this.getLanguage();
 
         starttimeout = this.setTimeout(() => {
@@ -40,8 +83,6 @@ class DropsWeather extends utils.Adapter {
                 this.readDataFromServer();
             }
         }, 2000);
-
-        this.chromeExecutable = '/usr/bin/chromium-browser';
 
         interval = this.setInterval(
             () => {
@@ -88,6 +129,7 @@ class DropsWeather extends utils.Adapter {
         watchdog = this.setTimeout(() => {
             this.log.error('timeout connecting to brower ${this.chromeExecutable}');
             this.disable();
+            this.terminate();
         }, 10_000);
 
         let browser;
@@ -113,6 +155,7 @@ class DropsWeather extends utils.Adapter {
         } catch (e) {
             this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
             this.disable();
+            this.terminate();
             return;
         }
 
@@ -284,9 +327,9 @@ class DropsWeather extends utils.Adapter {
         try {
             this.clearInterval(interval);
             this.clearTimeout(starttimeout);
-            this.clearTimeout(this.watchdog);
+            this.clearTimeout(watchdog);
             callback();
-        } catch (e) {
+        } catch {
             callback();
         }
     }

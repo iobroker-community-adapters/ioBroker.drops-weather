@@ -4,11 +4,21 @@
 	"items": {
 		"_options": {
 			"type": "panel",
-			"label": "Options",
+			"label": "lblConfig",
 			"items": {
+				"_header1": {
+					"type":"header",
+					"text":"hdrSetupGuide",
+					"size": 3,
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
+				},
 				"infoText1": {
 					"type": "staticText",
-					"text": "Please visit drops.live website and enter your city or your location to get your city code in the URL:",
+					"text": "lblInfoText1",
 					"xs": 12,
 					"sm": 12,
 					"md": 12,
@@ -28,7 +38,7 @@
 				},
 				"infoText2": {
 					"type": "staticText",
-					"text": "For more detailed instructions, please visit the website of this adapter:",
+					"text": "lblInfoText2",
 					"newLine": true,
 					"xs": 12,
 					"sm": 12,
@@ -38,9 +48,19 @@
 				},
 				"infoLink3": {
 					"type": "staticLink",
-					"label": "https://github.com/inbux/ioBroker.drops-weather",
-					"href": "https://github.com/inbux/ioBroker.drops-weather",
+					"label": "https://github.com/iobroker-community-adapters/ioBroker.drops-weather",
+					"href": "https://github.com/iobroker-community-adapters/ioBroker.drops-weather",
 					"newLine": true,
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
+				},
+				"_header2": {
+					"type":"header",
+					"text":"hdrConfiguration",
+					"size": 3,
 					"xs": 12,
 					"sm": 12,
 					"md": 12,
@@ -49,7 +69,7 @@
 				},
 				"locationText": {
 					"type": "staticText",
-					"text": "Please enter your city code from www.drops.live url (e.g. for 'Berlin' => 6573)",
+					"text": "lblLocationText",
 					"newLine": true,
 					"xs": 12,
 					"sm": 12,
@@ -67,6 +87,40 @@
 					"md": 8,
 					"lg": 6,
 					"xl": 4
+				}
+			}
+		},
+		"_puppeteer": {
+			"type": "panel",
+			"label": "lblBrowserCfg",
+			"items": {
+				"browserMode": {
+					"type": "select",
+					"label": "lblBrowserMode",
+					"options": [
+						{"label": "automatic", "value": "automatic"},
+						{"label": "built-in", "value": "built-in"},
+						{"label": "chromium-browser", "value": "chromkum-browser"},
+						{"label": "external", "value": "external"}
+					],
+					"default": "automatic",
+					"newLine": true,
+					"xs": 12,
+					"sm": 10,
+					"md": 8,
+					"lg": 6,
+					"xl": 4
+				},
+				"browserPath": {
+					"type": "text",
+					"label": "lblBrowserPath",
+					"newLine": true,
+					"hidden": "data.browserMode!=='external'",
+					"xs": 12,
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"xl": 12
 				}
 			}
 		}

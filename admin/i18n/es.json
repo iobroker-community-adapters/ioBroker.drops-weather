@@ -3,5 +3,14 @@
     "For more detailed instructions, please visit the website of this adapter:": "Para obtener instrucciones más detalladas, visite el sitio web de este adaptador:",
     "Options": "Opción",
     "Please enter your city code from www.drops.live url (e.g. for 'Berlin' => 6573)": "Ingrese el código de su ciudad desde www.drops.live URL (por ejemplo, para 'Berlín' => 6573)",
-    "Please visit drops.live website and enter your city or your location to get your city code in the URL:": "Visite el sitio web de Live. Live e ingrese su ciudad o su ubicación para obtener el código de su ciudad en la URL:"
+    "Please visit drops.live website and enter your city or your location to get your city code in the URL:": "Visite el sitio web de Live. Live e ingrese su ciudad o su ubicación para obtener el código de su ciudad en la URL:",
+    "lblConfig": "Configuración",
+    "lblInfoText1": "Visite el sitio web de Live. Live e ingrese su ciudad o su ubicación para obtener el código de su ciudad en la URL:",
+    "lblInfoText2": "Para obtener instrucciones más detalladas, visite el sitio web de este adaptador:",
+    "lblLocationText": "Ingrese el código de su ciudad desde www.drops.live URL (por ejemplo, para 'Berlín' => 6573)",
+    "lblBrowserCfg": "Configuración del navegador",
+    "lblBrowserMode": "Modo de navegador",
+    "lblBrowserPath": "Ruta del navegador",
+    "hdrSetupGuide": "Guía de configuración",
+    "hdrConfiguration": "Configuración"
 }

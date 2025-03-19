@@ -84,7 +84,9 @@
     ]
   },
   "native": {
-    "citycode": ""
+    "citycode": "",
+    "browserMode": "",
+    "browserPath": ""
   },
   "objects": [],
   "instanceObjects": [
