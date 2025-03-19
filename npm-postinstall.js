@@ -23,6 +23,7 @@ console.log('starting installation of additional packages, please stand by...');
 
 const { spawnSync } = require('node:child_process');
 const packages = additionalPackages[arch];
+
 for (const pkg of packages) {
     console.log(`installing ${pkg}...\n`);
 
