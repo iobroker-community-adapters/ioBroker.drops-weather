@@ -15,7 +15,7 @@ const utils = require('@iobroker/adapter-core');
 
 class DropsWeather extends utils.Adapter {
     /**
-     * @param {Partial<utils.AdapterOptions>} [options]
+     * @param options ioBroker optionen
      */
     constructor(options) {
         super({
@@ -33,7 +33,6 @@ class DropsWeather extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
-
         if (!this.config.browserMode) {
             this.config.browserMode = 'automatic';
         }
@@ -101,7 +100,7 @@ class DropsWeather extends utils.Adapter {
         try {
             this.log.debug('getting system language');
             this.getForeignObject('system.config', (err, state) => {
-                if (err || state === undefined || state === null || state.common.language === '') {
+                if (err || state === undefined || state === null) {
                     this.log.warn(`no language set in system configuration of ioBroker set to EN`);
                     dayjs.locale('en');
                 } else {
@@ -182,7 +181,8 @@ class DropsWeather extends utils.Adapter {
                 // const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
                 // labeltext = element ? element.textContent : 'Kein Text gefunden';
 
-                // @ts-ignore
+                // @ts-expect-error document seems to be defined by puppeteer
+                // eslint-disable-next-line no-undef
                 const scripts = document.querySelectorAll('script'); // ja das ist korrekt so
                 for (let script of scripts) {
                     if (script.textContent.includes('RainGraph.create({')) {
@@ -194,9 +194,10 @@ class DropsWeather extends utils.Adapter {
             this.log.debug(`got scriptContents "${JSON.stringify(scriptContents)}"`);
 
             const labeltext = await page.evaluate(() => {
-                // @ts-ignore
+                // @ts-expect-error document seems to be defined by puppeteer
+                // eslint-disable-next-line no-undef
                 const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
-                labeltext = element ? element.textContent : 'Kein Text gefunden';
+                const labeltext = element ? element.textContent : 'Kein Text gefunden';
                 return labeltext;
             });
 
@@ -276,7 +277,7 @@ class DropsWeather extends utils.Adapter {
                 const item_rain = {};
                 const item_rain_echart = {};
 
-                const dat = data[i].time;
+                //const dat = data[i].time;
                 const date = dayjs(data[i].time);
 
                 dayjs.extend(utc);
@@ -321,7 +322,7 @@ class DropsWeather extends utils.Adapter {
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
      *
-     * @param {() => void} callback
+     * @param callback iobroker callback
      */
     onUnload(callback) {
         try {
@@ -337,11 +338,9 @@ class DropsWeather extends utils.Adapter {
 
 if (require.main !== module) {
     // Export the constructor in compact mode
-    /**
-     * @param {Partial<utils.AdapterOptions>} [options]
-     */
     module.exports = options => new DropsWeather(options);
 } else {
     // otherwise start the instance directly
+    // @ts-expect-error no options is ok
     new DropsWeather();
 }

@@ -27,9 +27,9 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.3",
-    "puppeteer": "^24.4.0",
     "cheerio": "^1.0.0-rc.12",
-    "dayjs": "^1.11.13"
+    "dayjs": "^1.11.13",
+    "puppeteer": "^24.4.0"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.8.0",
@@ -39,7 +39,7 @@
     "@iobroker/adapter-dev": "^1.4.0",
     "@iobroker/eslint-config": "^2.0.1",
     "@iobroker/testing": "^5.0.3",
-    "@tsconfig/node14": "^14.1.2",
+    "@tsconfig/node20": "^20.1.4",
     "@types/chai": "^5.0.1",
     "@types/chai-as-promised": "^8.0.1",
     "@types/mocha": "^10.0.10",
