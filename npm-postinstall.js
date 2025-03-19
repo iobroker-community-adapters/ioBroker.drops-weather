@@ -11,18 +11,19 @@ console.log('NPM POSTINSTALL script started');
 const arch = os.arch();
 const platform = os.platform();
 
-console.log(`installation running on ${platform} / ${arch}`);
+console.log(`installation running on ${platform} / ${arch}\n`);
 
 if (!additionalPackages[arch]) {
     console.log(`NO additonal installation required`);
     process.exit(0);
 }
 
-console.log(`starting installation of additional packages, please stand by...`);
+console.log(`starting installation of additional packages, please stand by...\n`);
+
 const { spawnSync } = require('node:child_process');
 const packages = additionalPackages[arch];
 for (const pkg of packages){
-    console.log(`installing ${pkg}...`);
+    console.log(`installing ${pkg}...\n`);
     const res = spawnSync(`sudo apt install ${pkg}`);
-    console.log(`${res}`);
+    console.log(`${res.toString()}`);
 }
