@@ -41,6 +41,8 @@ class DropsWeather extends utils.Adapter {
             }
         }, 2000);
 
+        this.chromeExecutable = '/usr/bin/chromiun-browser';
+
         interval = this.setInterval(
             () => {
                 if (this.config.citycode === null || this.config.citycode === '') {
@@ -84,7 +86,7 @@ class DropsWeather extends utils.Adapter {
         let weatherdataFound = false;
 
         watchdog = this.setTimeout(() => {
-            this.log.error('timeout connecting to brower');
+            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
             this.disable();
         }, 10_000);
 
@@ -95,7 +97,7 @@ class DropsWeather extends utils.Adapter {
                 defaultViewport: null,
                 //            ignoreHTTPSErrors: true,
                 //            executablePath: '/usr/bin/chromium-browser',
-                executablePath: '/usr/bin/chromium-shell',
+                executablePath: this.chromeExecutable,
                 args: [
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
@@ -109,7 +111,7 @@ class DropsWeather extends utils.Adapter {
                 ],
             });
         } catch (e) {
-            this.log.error(`error launching browser- ${e}`);
+            this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
             this.disable();
             return;
         }
