@@ -27,7 +27,8 @@ for (const pkg of packages) {
     console.log(`installing ${pkg}...\n`);
 
     const res = spawnSync('sh', ['-c', `sudo apt install ${pkg}`]);
-    console.log(`${res.stdout}`);
-    console.log(`${res.stderr}`);
-
+    res.stdout && console.log(`${res.stdout}`);
+    res.stderr && console.log(`${res.stderr}`);
+    res.status && console.warn('installation failed with status ${res.status}');
+    console.log('');
 }
