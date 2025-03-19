@@ -10,7 +10,7 @@ const puppeteer = require('puppeteer');
 let interval = null;
 let starttimeout = null;
 let watchdog = null;
-let browser = null; 
+let browser = null;
 let page = null;
 
 const utils = require('@iobroker/adapter-core');
@@ -77,6 +77,12 @@ class DropsWeather extends utils.Adapter {
 
         await this.getLanguage();
 
+        watchdog = this.setTimeout(() => {
+            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
+            this.disable();
+            this.terminate();
+        }, 10_000);
+
         try {
             browser = await puppeteer.launch({
                 headless: true,
@@ -96,13 +102,17 @@ class DropsWeather extends utils.Adapter {
                     '--ignore-certificate-errors',
                 ],
             });
-            
+
+            this.clearTimeout(watchdog);
+            watchdog = null;
+
+            this.log.debug('browser launched, creating new page');
+
             page = await browser.newPage();
 
             await page.setUserAgent(
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             );
-
         } catch (e) {
             this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
             this.disable();
@@ -160,18 +170,9 @@ class DropsWeather extends utils.Adapter {
 
         let weatherdataFound = false;
 
-        watchdog = this.setTimeout(() => {
-            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
-            this.disable();
-            this.terminate();
-        }, 10_000);
+        this.log.debug(`creating new page ...`);
 
-        this.clearTimeout(watchdog);
-        watchdog = null;
-
-        this.log.debug(`browser launched, creating new page ...`);
-
-        try {            
+        try {
             this.log.debug(`loading ${url}`);
             await page.goto(url, {
                 waitUntil: 'domcontentloaded', // Warten, bis die Seite fertig geladen ist
@@ -234,7 +235,7 @@ class DropsWeather extends utils.Adapter {
             }
         } catch (error) {
             this.log.warn(error);
-        } 
+        }
     }
 
     splitByNewline(inputString) {
@@ -313,16 +314,16 @@ class DropsWeather extends utils.Adapter {
             this.log.error(error);
         }
     }
-    
+
     async destroyBrowser() {
-      this.log.debug('destroy browser');
-      const pages = await browser.pages();
-      for (let i = 0; i < pages.length; i++) {
-          await pages[i].close();
-      }
-      await browser.close();        
+        this.log.debug('destroy browser');
+        const pages = await browser.pages();
+        for (let i = 0; i < pages.length; i++) {
+            await pages[i].close();
+        }
+        await browser.close();
     }
-    
+
     //----------------------------------------------------------------------------------------------------
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
