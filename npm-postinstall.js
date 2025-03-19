@@ -4,7 +4,7 @@
 const os = require('node:os');
 
 const additionalPackages = {
-    arm: ['chromium-browser'],
+    arm: ['chromium-headless-shell'],
 };
 
 console.log('NPM POSTINSTALL script started');
