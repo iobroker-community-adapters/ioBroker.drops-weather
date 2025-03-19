@@ -19,10 +19,10 @@ if (!additionalPackages[arch]) {
 }
 
 console.log(`starting installation of additional packages, please stand by...`);
-const spawnSync = require('node:child_process').spawnSync;
+const { spawnSync } = require('node:child_process');
 const packages = additionalPackages[arch];
-for (const pkg in packages){
+for (const pkg of packages){
     console.log(`installing ${pkg}...`);
-    const res = spawnSync( `apt install ${pkg}`);
+    const res = spawnSync(`sudo apt install ${pkg}`);
     console.log(`${res}`);
 }
