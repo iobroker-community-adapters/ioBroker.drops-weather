@@ -41,7 +41,7 @@ class DropsWeather extends utils.Adapter {
             }
         }, 2000);
 
-        this.chromeExecutable = '/usr/bin/chromiun-browser';
+        this.chromeExecutable = '/usr/bin/chromium-browser';
 
         interval = this.setInterval(
             () => {
