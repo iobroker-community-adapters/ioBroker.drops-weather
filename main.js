@@ -87,7 +87,7 @@ class DropsWeather extends utils.Adapter {
             defaultViewport: null,
 //            ignoreHTTPSErrors: true,
 //            executablePath: '/usr/bin/chromium-browser',
-            executablePath: 'chromium-shell',
+            executablePath: '/usr/bin/chromium-shell',
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
