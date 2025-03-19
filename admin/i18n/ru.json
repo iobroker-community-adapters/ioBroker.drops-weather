@@ -3,5 +3,14 @@
     "For more detailed instructions, please visit the website of this adapter:": "Для получения более подробных инструкций, пожалуйста, посетите веб -сайт этого адаптера:",
     "Options": "Вариант",
     "Please enter your city code from www.drops.live url (e.g. for 'Berlin' => 6573)": "Пожалуйста, введите код города с www.drops.live url (например, для 'berlin' => 6573)",
-    "Please visit drops.live website and enter your city or your location to get your city code in the URL:": "Пожалуйста, посетите веб -сайт Drops.live и введите свой город или местоположение, чтобы получить код города в URL:"
+    "Please visit drops.live website and enter your city or your location to get your city code in the URL:": "Пожалуйста, посетите веб -сайт Drops.live и введите свой город или местоположение, чтобы получить код города в URL:",
+    "lblConfig": "Конфигурация",
+    "lblInfoText1": "Пожалуйста, посетите веб -сайт Drops.live и введите свой город или местоположение, чтобы получить код города в URL:",
+    "lblInfoText2": "Для получения более подробных инструкций, пожалуйста, посетите веб -сайт этого адаптера:",
+    "lblLocationText": "Пожалуйста, введите код города с www.drops.live url (например, для 'berlin' => 6573)",
+    "lblBrowserCfg": "Конфигурация браузера",
+    "lblBrowserMode": "Режим браузера",
+    "lblBrowserPath": "Путь браузера",
+    "hdrSetupGuide": "Руководство по настройке",
+    "hdrConfiguration": "Конфигурация"
 }

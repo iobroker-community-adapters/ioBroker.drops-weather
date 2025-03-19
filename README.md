@@ -38,6 +38,10 @@ You will find your city code in the URL:
 
 In this example you will find 6573 for Berlin.
 
+## Note for users of arm architecure (i.e. raspberry pi)
+
+This adapter tries to install the package 'chromium-browser' at linux / arm architecture. This is required as the standard installation of puppeteer does not provide a working headless browser on this architecture. If the installation fails, one might install any compatible browser and specify the path to the browser at the instance configuration.
+
 ## Credits
 
 This adapter would not have been possible without the great work of @inbux (https://github.com/inbux), who created pre V1.x.x releases of this adapter.
@@ -48,6 +52,11 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 1.1.0 (2025-03-19)
+- (mcm1957) support for raspberryPi / arm architecture added
+- (mcm1957) adminUI extended to allow browser selection
+- (mcm1957) dependencies have been updated
+
 ### 1.0.0 (2025-03-17)
 - (mcm1957) adapter has been migrated to iobroker-community-adapters organisation
 - (mcm1957) adapter requires node.js 20.x, js-controller 6 and admin 7 now.
@@ -70,13 +79,6 @@ This adapter would not have been possible without the great work of @inbux (http
 - (inbux) changed URL from drops.live to www.drops.live (thanks to Marc-Berg)
 - (inbux) small changes because of axios update
 - (inbux) changed units to mm/h
-
-### 0.2.1 (2022-10-02)
-- (inbux) added actualRain
-- (inbux) reading system language for weekdays localization
-- (inbux) changed rainStartsAt to timestamp
-- (inbux) changed most log messages to debug to keep log cleaner
-- (inbux) updated README.md
 
 ## License
 
