@@ -10,6 +10,8 @@ const puppeteer = require('puppeteer');
 let interval = null;
 let starttimeout = null;
 let watchdog = null;
+let browser = null; 
+let page = null;
 
 const utils = require('@iobroker/adapter-core');
 
@@ -75,6 +77,39 @@ class DropsWeather extends utils.Adapter {
 
         await this.getLanguage();
 
+        try {
+            browser = await puppeteer.launch({
+                headless: true,
+                defaultViewport: null,
+                //            ignoreHTTPSErrors: true,
+                //            executablePath: '/usr/bin/chromium-browser',
+                executablePath: this.chromeExecutable,
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-accelerated-2d-canvas',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    '--disable-gpu',
+                    '--ignore-certificate-errors',
+                ],
+            });
+            
+            page = await browser.newPage();
+
+            await page.setUserAgent(
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            );
+
+        } catch (e) {
+            this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
+            this.disable();
+            this.terminate();
+            return;
+        }
+
         starttimeout = this.setTimeout(() => {
             if (this.config.citycode === null || this.config.citycode === '') {
                 this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
@@ -131,45 +166,12 @@ class DropsWeather extends utils.Adapter {
             this.terminate();
         }, 10_000);
 
-        let browser;
-        try {
-            browser = await puppeteer.launch({
-                headless: true,
-                defaultViewport: null,
-                //            ignoreHTTPSErrors: true,
-                //            executablePath: '/usr/bin/chromium-browser',
-                executablePath: this.chromeExecutable,
-                args: [
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                    '--disable-accelerated-2d-canvas',
-                    '--no-first-run',
-                    '--no-zygote',
-                    '--single-process',
-                    '--disable-gpu',
-                    '--ignore-certificate-errors',
-                ],
-            });
-        } catch (e) {
-            this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
-            this.disable();
-            this.terminate();
-            return;
-        }
-
         this.clearTimeout(watchdog);
         watchdog = null;
 
         this.log.debug(`browser launched, creating new page ...`);
 
-        try {
-            const page = await browser.newPage();
-
-            await page.setUserAgent(
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            );
-
+        try {            
             this.log.debug(`loading ${url}`);
             await page.goto(url, {
                 waitUntil: 'domcontentloaded', // Warten, bis die Seite fertig geladen ist
@@ -232,14 +234,7 @@ class DropsWeather extends utils.Adapter {
             }
         } catch (error) {
             this.log.warn(error);
-        } finally {
-            this.log.debug('destroy browser');
-            const pages = await browser.pages();
-            for (let i = 0; i < pages.length; i++) {
-                await pages[i].close();
-            }
-            await browser.close();
-        }
+        } 
     }
 
     splitByNewline(inputString) {
@@ -318,6 +313,16 @@ class DropsWeather extends utils.Adapter {
             this.log.error(error);
         }
     }
+    
+    async destroyBrowser() {
+      this.log.debug('destroy browser');
+      const pages = await browser.pages();
+      for (let i = 0; i < pages.length; i++) {
+          await pages[i].close();
+      }
+      await browser.close();        
+    }
+    
     //----------------------------------------------------------------------------------------------------
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
@@ -326,6 +331,7 @@ class DropsWeather extends utils.Adapter {
      */
     onUnload(callback) {
         try {
+            this.destroyBrowser();
             this.clearInterval(interval);
             this.clearTimeout(starttimeout);
             this.clearTimeout(watchdog);
