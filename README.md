@@ -38,6 +38,10 @@ You will find your city code in the URL:
 
 In this example you will find 6573 for Berlin.
 
+## Note for users of arm architecure (i.e. raspberry pi)
+
+This adapter tries to install the package 'chromium-browser' at linux / arm architecture. This is required as the standard installation of puppeteer does not provide a working headless browser on this architecture. If the installation fails, one might install any compatible browser and specify the path to the browser at the instance configuration.
+
 ## Credits
 
 This adapter would not have been possible without the great work of @inbux (https://github.com/inbux), who created pre V1.x.x releases of this adapter.
@@ -48,6 +52,10 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (mcm1957) support for raspberryPi / arm architecture added
+- (mcm1957) adminUI extended to allow browser selection
+
 ### 1.0.0 (2025-03-17)
 - (mcm1957) adapter has been migrated to iobroker-community-adapters organisation
 - (mcm1957) adapter requires node.js 20.x, js-controller 6 and admin 7 now.
