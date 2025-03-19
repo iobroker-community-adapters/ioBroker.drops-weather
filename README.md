@@ -55,6 +55,7 @@ This adapter would not have been possible without the great work of @inbux (http
 ### **WORK IN PROGRESS**
 - (mcm1957) support for raspberryPi / arm architecture added
 - (mcm1957) adminUI extended to allow browser selection
+- (mcm1957) dependencies have been updated
 
 ### 1.0.0 (2025-03-17)
 - (mcm1957) adapter has been migrated to iobroker-community-adapters organisation
