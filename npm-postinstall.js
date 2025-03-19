@@ -4,7 +4,7 @@
 const os = require('node:os');
 
 const additionalPackages = {
-    arm: ['chromium-headless-shell'],
+    arm: ['chromium-shell'],
 };
 
 console.log('NPM POSTINSTALL script started');
