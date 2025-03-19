@@ -3,5 +3,14 @@
     "For more detailed instructions, please visit the website of this adapter:": "Ga voor meer gedetailleerde instructies naar de website van deze adapter:",
     "Options": "Opties",
     "Please enter your city code from www.drops.live url (e.g. for 'Berlin' => 6573)": "Voer uw stadscode in van www.drops.live URL (bijv. Voor 'Berlijn' => 6573)",
-    "Please visit drops.live website and enter your city or your location to get your city code in the URL:": "Ga naar de website van Drops.Live en voer uw stad of uw locatie in om uw stadscode in de URL te krijgen:"
+    "Please visit drops.live website and enter your city or your location to get your city code in the URL:": "Ga naar de website van Drops.Live en voer uw stad of uw locatie in om uw stadscode in de URL te krijgen:",
+    "lblConfig": "Configuratie",
+    "lblInfoText1": "Ga naar de website van Drops.Live en voer uw stad of uw locatie in om uw stadscode in de URL te krijgen:",
+    "lblInfoText2": "Ga voor meer gedetailleerde instructies naar de website van deze adapter:",
+    "lblLocationText": "Voer uw stadscode in van www.drops.live URL (bijv. Voor 'Berlijn' => 6573)",
+    "lblBrowserCfg": "Browserconfiguratie",
+    "lblBrowserMode": "Browsermodus",
+    "lblBrowserPath": "Browserpad",
+    "hdrSetupGuide": "Setup -gids",
+    "hdrConfiguration": "Configuratie"
 }

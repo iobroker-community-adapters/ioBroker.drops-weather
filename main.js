@@ -1,4 +1,6 @@
 'use strict';
+const os = require('node:os');
+
 const dayjs = require('dayjs');
 require('dayjs/locale/de');
 const utc = require('dayjs/plugin/utc');
@@ -6,7 +8,8 @@ const utc = require('dayjs/plugin/utc');
 const puppeteer = require('puppeteer');
 
 let interval = null;
-let starttimeout;
+let starttimeout = null;
+let watchdog = null;
 
 const utils = require('@iobroker/adapter-core');
 
@@ -30,9 +33,50 @@ class DropsWeather extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
+
+        if (!this.config.browserMode) {
+            this.config.browserMode = 'automatic';
+        }
+        this.log.info(`browserMode set to ${this.config.browserMode}`);
+        this.chromeExecutable = undefined;
+
+        if (this.config.browserMode === 'built-in') {
+            if (os.arch() === 'arm') {
+                this.log.error(
+                    `browser mode ${this.config.browserMode} not supported at platform ${os.platform()} / ${os.arch()}`,
+                );
+                this.disable();
+                this.terminate();
+                return;
+            }
+        } else if (this.config.browserMode === 'chromium-browser') {
+            if (os.platform() !== 'linux' || os.arch() !== 'arm') {
+                this.log.error(
+                    `browser mode ${this.config.browserMode} not supported at platform ${os.platform()} / ${os.arch()}`,
+                );
+                this.disable();
+                this.terminate();
+                return;
+            }
+            this.chromeExecutable = '/usr/bin/chromium-browser';
+        } else if (this.config.browserMode === 'external') {
+            this.chromeExecutable = this.config.browserPath;
+        } else if (this.config.browserMode === 'automatic') {
+            if (os.platform() === 'linux' && os.arch() === 'arm') {
+                this.chromeExecutable = '/usr/bin/chromium-browser';
+            }
+        } else {
+            this.log.error(`browser mode ${this.config.browserMode} not (yet) supported`);
+            this.disable();
+            this.terminate();
+            return;
+        }
+
+        this.log.info(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
+
         await this.getLanguage();
 
-        starttimeout = setTimeout(() => {
+        starttimeout = this.setTimeout(() => {
             if (this.config.citycode === null || this.config.citycode === '') {
                 this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
             } else {
@@ -40,7 +84,7 @@ class DropsWeather extends utils.Adapter {
             }
         }, 2000);
 
-        interval = setInterval(
+        interval = this.setInterval(
             () => {
                 if (this.config.citycode === null || this.config.citycode === '') {
                     clearInterval(interval);
@@ -82,21 +126,43 @@ class DropsWeather extends utils.Adapter {
 
         let weatherdataFound = false;
 
-        const browser = await puppeteer.launch({
-            headless: true,
-            ignoreHTTPSErrors: true,
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-accelerated-2d-canvas',
-                '--no-first-run',
-                '--no-zygote',
-                '--single-process',
-                '--disable-gpu',
-                '--ignore-certificate-errors',
-            ],
-        });
+        watchdog = this.setTimeout(() => {
+            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
+            this.disable();
+            this.terminate();
+        }, 10_000);
+
+        let browser;
+        try {
+            browser = await puppeteer.launch({
+                headless: true,
+                defaultViewport: null,
+                //            ignoreHTTPSErrors: true,
+                //            executablePath: '/usr/bin/chromium-browser',
+                executablePath: this.chromeExecutable,
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-accelerated-2d-canvas',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    '--disable-gpu',
+                    '--ignore-certificate-errors',
+                ],
+            });
+        } catch (e) {
+            this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
+            this.disable();
+            this.terminate();
+            return;
+        }
+
+        this.clearTimeout(watchdog);
+        watchdog = null;
+
+        this.log.debug(`browser launched, creating new page ...`);
 
         try {
             const page = await browser.newPage();
@@ -105,15 +171,18 @@ class DropsWeather extends utils.Adapter {
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             );
 
+            this.log.debug(`loading ${url}`);
             await page.goto(url, {
                 waitUntil: 'domcontentloaded', // Warten, bis die Seite fertig geladen ist
             });
 
+            this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
-                // @ts-ignore
-                const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
-                labeltext = element ? element.textContent : 'Kein Text gefunden';
+                // // @ts-ignore
+                // const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
+                // labeltext = element ? element.textContent : 'Kein Text gefunden';
 
+                // @ts-ignore
                 const scripts = document.querySelectorAll('script'); // ja das ist korrekt so
                 for (let script of scripts) {
                     if (script.textContent.includes('RainGraph.create({')) {
@@ -122,6 +191,7 @@ class DropsWeather extends utils.Adapter {
                 }
                 return null;
             });
+            this.log.debug(`got scriptContents "${JSON.stringify(scriptContents)}"`);
 
             const labeltext = await page.evaluate(() => {
                 // @ts-ignore
@@ -130,11 +200,12 @@ class DropsWeather extends utils.Adapter {
                 return labeltext;
             });
 
+            this.log.debug(`got labeltext "${labeltext}"`);
             this.setStateAsync('data_1h.labeltext', { val: labeltext, ack: true });
 
             for (const scriptContent of scriptContents) {
                 if (scriptContent.includes('series')) {
-                    console.log('weatherData found');
+                    this.log.debug('weatherData found');
                     let data = scriptContent.substring(scriptContent.indexOf('series'));
 
                     if (data.includes('}}},')) {
@@ -144,13 +215,13 @@ class DropsWeather extends utils.Adapter {
                         data = data.replace('24h', 'data24h');
 
                         const dataJSON = JSON.parse(data);
-                        console.log('creating 5 min states');
+                        this.log.debug('creating 5 min states');
                         this.createStateData(dataJSON.data2h.data, 'data_5min');
 
-                        console.log('creating 1 hour states');
+                        this.log.debug('creating 1 hour states');
                         this.createStateData(dataJSON.data24h.data, 'data_1h');
                     } else {
-                        console.log('end of data in series NOT found');
+                        this.log.debug('end of data in series NOT found');
                     }
                 }
             }
@@ -254,10 +325,11 @@ class DropsWeather extends utils.Adapter {
      */
     onUnload(callback) {
         try {
-            clearInterval(interval);
-            clearTimeout(starttimeout);
+            this.clearInterval(interval);
+            this.clearTimeout(starttimeout);
+            this.clearTimeout(watchdog);
             callback();
-        } catch (e) {
+        } catch {
             callback();
         }
     }
