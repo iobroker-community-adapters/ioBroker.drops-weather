@@ -1,20 +1,20 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.1.0-alpha.0",
+    "version": "1.1.0",
     "news": {
-      "1.1.0-alpha.0": {
-        "en": "support for raspberryPi / arm architecture added\nadminUI extended to allow browser selection",
-        "de": "unterstützung für Himbeere Pi / Arm Architektur hinzugefügt\nadmin UI erweitert um Browserauswahl zu ermöglichen",
-        "ru": "поддержка малины Добавлена архитектура Pi / Arm\nадмин UI расширен для выбора браузера",
-        "pt": "suporte para framboesa Pi / arquitetura de braço adicionado\nadministrador UI estendida para permitir a seleção do navegador",
-        "nl": "ondersteuning voor framboos Pi / arm architectuur toegevoegd\nadmin UI uitgebreid om browserselectie mogelijk te maken",
-        "fr": "soutien à la framboise Pi / architecture de bras ajouté\nadministrateur UI étendue pour permettre la sélection du navigateur",
-        "it": "supporto per lampone Pi / braccio architettura aggiunto\nadmin UI esteso per consentire la selezione del browser",
-        "es": "soporte para frambuesa Pi / arma arquitectura añadido\nadmin UI extendida para permitir la selección del navegador",
-        "pl": "wsparcie dla malin Dodano architekturę Pi / arm\nadmin Interfejs rozszerzony, aby umożliwić wybór przeglądarki",
-        "uk": "підтримка малини Pi / архітектура додано\nадмін UI розширено для вибору браузера",
-        "zh-cn": "支持树莓 添加 Pi / 臂结构\n管理员 UI 扩展允许浏览器选择"
+      "1.1.0": {
+        "en": "support for raspberryPi / arm architecture added\nadminUI extended to allow browser selection\ndependencies have been updated",
+        "de": "unterstützung für Himbeere Pi / Arm Architektur hinzugefügt\nadmin UI erweitert um Browserauswahl zu ermöglichen\nabhängigkeiten wurden aktualisiert",
+        "ru": "поддержка малины Добавлена архитектура Pi / Arm\nадмин UI расширен для выбора браузера\nобновлены зависимости",
+        "pt": "suporte para framboesa Pi / arquitetura de braço adicionado\nadministrador UI estendida para permitir a seleção do navegador\ndependências foram atualizadas",
+        "nl": "ondersteuning voor framboos Pi / arm architectuur toegevoegd\nadmin UI uitgebreid om browserselectie mogelijk te maken\nafhankelijkheden zijn bijgewerkt",
+        "fr": "soutien à la framboise Pi / architecture de bras ajouté\nadministrateur UI étendue pour permettre la sélection du navigateur\nles dépendances ont été mises à jour",
+        "it": "supporto per lampone Pi / braccio architettura aggiunto\nadmin UI esteso per consentire la selezione del browser\nle dipendenze sono state aggiornate",
+        "es": "soporte para frambuesa Pi / arma arquitectura añadido\nadmin UI extendida para permitir la selección del navegador\nlas dependencias se han actualizado",
+        "pl": "wsparcie dla malin Dodano architekturę Pi / arm\nadmin Interfejs rozszerzony, aby umożliwić wybór przeglądarki\nuzależnienia zostały zaktualizowane",
+        "uk": "підтримка малини Pi / архітектура додано\nадмін UI розширено для вибору браузера\nбуло оновлено залежності",
+        "zh-cn": "支持树莓 添加 Pi / 臂结构\n管理员 UI 扩展允许浏览器选择\n依赖关系已更新"
       },
       "1.0.0": {
         "en": "adapter has been migrated to iobroker-community-adapters organisation\nadapter requires node.js 20.x, js-controller 6 and admin 7 now.\naxios has been replaced by puppeteer\ndependencies have been updated",

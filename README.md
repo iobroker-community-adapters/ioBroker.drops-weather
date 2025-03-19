@@ -52,7 +52,7 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.1.0 (2025-03-19)
 - (mcm1957) support for raspberryPi / arm architecture added
 - (mcm1957) adminUI extended to allow browser selection
 - (mcm1957) dependencies have been updated
