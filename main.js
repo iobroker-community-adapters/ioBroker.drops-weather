@@ -78,9 +78,7 @@ class DropsWeather extends utils.Adapter {
         try {
             browser = await puppeteer.launch({
                 headless: true,
-                defaultViewport: null,
-                //            ignoreHTTPSErrors: true,
-                //            executablePath: '/usr/bin/chromium-browser',
+                defaultViewport: null,               
                 executablePath: this.chromeExecutable,
                 args: [
                     '--no-sandbox',
@@ -118,8 +116,8 @@ class DropsWeather extends utils.Adapter {
                     this.readDataFromServer();
                 }
             },
-            1000 * 60 * 5,
-        ); // alle 5 min
+            1000 * 60 * 3,
+        ); // alle 3 min
     }
 
     //----------------------------------------------------------------------------------------------------
