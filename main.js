@@ -7,11 +7,8 @@ require('dayjs/locale/de');
 const utc = require('dayjs/plugin/utc');
 const puppeteer = require('puppeteer');
 
-let interval = null;
-let starttimeout = null;
 let watchdog = null;
 let browser = null;
-let page = null;
 
 class DropsWeather extends utils.Adapter {
     /**
@@ -75,59 +72,11 @@ class DropsWeather extends utils.Adapter {
 
         await this.getLanguage();
 
-        watchdog = this.setTimeout(() => {
-            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
-            this.disable();
-            this.terminate();
-        }, 10_000);
-
-        try {
-            browser = await puppeteer.launch({
-                headless: true,
-                defaultViewport: null,               
-                executablePath: this.chromeExecutable,
-                args: [
-                    '--periodic-task',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                    '--disable-accelerated-2d-canvas',
-                    '--no-first-run',
-                    '--no-zygote',
-                    '--single-process',
-                    '--disable-gpu',
-                    '--ignore-certificate-errors',
-                ],
-            });
-
-            this.clearTimeout(watchdog);
-            watchdog = null;
-
-        } catch (e) {
-            this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
-            this.disable();
-            this.terminate();
-            return;
+        if (this.config.citycode === null || this.config.citycode === '') {
+            this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
+        } else {
+            this.readDataFromServer();
         }
-
-        starttimeout = this.setTimeout(() => {
-            if (this.config.citycode === null || this.config.citycode === '') {
-                this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
-            } else {
-                this.readDataFromServer();
-            }
-        }, 2000);
-
-        interval = this.setInterval(
-            () => {
-                if (this.config.citycode === null || this.config.citycode === '') {
-                    clearInterval(interval);
-                } else {
-                    this.readDataFromServer();
-                }
-            },
-            1000 * 60 * 2,
-        ); // alle 2 min
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -156,27 +105,65 @@ class DropsWeather extends utils.Adapter {
     async readDataFromServer() {
         const url = this.baseUrl + this.config.citycode;
 
+        watchdog = this.setTimeout(() => {
+            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
+            this.disable();
+            this.terminate();
+        }, 10000);
+
+        try {
+            browser = await puppeteer.launch({
+                headless: true,
+                defaultViewport: null,
+                executablePath: this.chromeExecutable,
+                args: [
+                    '--periodic-task',
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-accelerated-2d-canvas',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    '--disable-gpu',
+                    '--ignore-certificate-errors',
+                ],
+            });
+
+            this.clearTimeout(watchdog);
+            watchdog = null;
+        } catch (e) {
+            this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
+            this.disable();
+            this.terminate();
+            return;
+        }
+
         this.log.debug(`Reading data from : ${url}`);
 
         let weatherdataFound = false;
 
         this.log.debug(`creating new page ...`);
+        try {
+            const page = await browser.newPage();
 
-        page = await browser.newPage();
+            await page.setUserAgent(
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            );
 
-        await page.setUserAgent(
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        );
-        
-        try {            
             await page.goto(url, {
                 waitUntil: 'networkidle2', // Warten, bis die Seite fertig geladen ist
             });
 
-            await page.waitForFunction(() => {
-                return [...document.querySelectorAll('script')].some(script => script.textContent.includes('RainGraph.create({'));
-            }, { timeout: 10000 });
-            
+            await page.waitForFunction(
+                () => {
+                    return [...document.querySelectorAll('script')].some(script =>
+                        script.textContent.includes('RainGraph.create({'),
+                    );
+                },
+                { timeout: 10000 },
+            );
+
             this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
                 // @ts-expect-error document seems to be defined by puppeteer
@@ -225,11 +212,11 @@ class DropsWeather extends utils.Adapter {
                 }
             }
 
-            await page.close();
-            
             if (!weatherdataFound) {
                 this.log.warn('no weatherData found in HTML');
             }
+
+            this.stop();
         } catch (error) {
             this.log.warn(error);
         }
@@ -285,8 +272,6 @@ class DropsWeather extends utils.Adapter {
                         }
                     }
                 }
-                //this.log.debug(date.format('HH:mm').toString());
-
                 item_rain['label'] = date.format(dateformat).toString();
                 item_rain['value'] = data[i].precipitationrate.toString();
                 JSONdata_rain.push(item_rain);
@@ -330,8 +315,6 @@ class DropsWeather extends utils.Adapter {
     onUnload(callback) {
         try {
             this.destroyBrowser();
-            this.clearInterval(interval);
-            this.clearTimeout(starttimeout);
             this.clearTimeout(watchdog);
             callback();
         } catch {

@@ -72,12 +72,14 @@
     },
     "platform": "Javascript/Node.js",
     "icon": "drops-weather.png",
-    "enabled": true,
+    "enabled": false,
     "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.drops-weather/main/admin/drops-weather.png",
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.drops-weather/blob/main/README.md",
     "loglevel": "info",
     "tier": 3,
-    "mode": "daemon",
+    "mode": "schedule",
+    "allowInit": true,
+    "schedule": "*/5 * * * *",
     "type": "weather",
     "compact": true,
     "connectionType": "cloud",
@@ -94,7 +96,8 @@
       {
         "admin": ">=7.4.10"
       }
-    ]
+    ],
+    "installedFrom": "iobroker-community-adapters/ioBroker.drops-weather#16c838b1603f3faa5d858bd2aefc1af4bb98f625"
   },
   "native": {
     "citycode": "",
