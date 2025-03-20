@@ -72,7 +72,7 @@
     },
     "platform": "Javascript/Node.js",
     "icon": "drops-weather.png",
-    "enabled": true,
+    "enabled": false,
     "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.drops-weather/main/admin/drops-weather.png",
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.drops-weather/blob/main/README.md",
     "loglevel": "info",

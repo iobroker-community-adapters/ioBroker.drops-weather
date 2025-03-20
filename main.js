@@ -7,9 +7,9 @@ require('dayjs/locale/de');
 const utc = require('dayjs/plugin/utc');
 const puppeteer = require('puppeteer');
 
-let interval = null;
-let starttimeout = null;
 let watchdog = null;
+let browser = null;
+
 
 class DropsWeather extends utils.Adapter {
     /**
@@ -112,8 +112,6 @@ class DropsWeather extends utils.Adapter {
             this.disable();
             this.terminate();
         }, 10000);
-
-        let browser = null;
 
         try {
             browser = await puppeteer.launch({
@@ -316,8 +314,6 @@ class DropsWeather extends utils.Adapter {
     onUnload(callback) {
         try {
             this.destroyBrowser();
-            this.clearInterval(interval);
-            this.clearTimeout(starttimeout);
             this.clearTimeout(watchdog);
             callback();
         } catch {
