@@ -87,6 +87,7 @@ class DropsWeather extends utils.Adapter {
                 defaultViewport: null,               
                 executablePath: this.chromeExecutable,
                 args: [
+                    '--periodic-task',
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
                     '--disable-dev-shm-usage',
@@ -125,8 +126,8 @@ class DropsWeather extends utils.Adapter {
                     this.readDataFromServer();
                 }
             },
-            1000 * 60 * 3,
-        ); // alle 3 min
+            1000 * 60 * 2,
+        ); // alle 2 min
     }
 
     //----------------------------------------------------------------------------------------------------
