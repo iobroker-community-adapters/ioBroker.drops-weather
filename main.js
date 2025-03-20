@@ -79,7 +79,7 @@ class DropsWeather extends utils.Adapter {
             this.log.error('timeout connecting to brower ${this.chromeExecutable}');
             this.disable();
             this.terminate();
-        }, 10_000);
+        }, 10000);
 
         try {
             browser = await puppeteer.launch({
@@ -142,7 +142,7 @@ class DropsWeather extends utils.Adapter {
                     this.log.debug(state.common.language);
                     if (state.common.language === 'de') {
                         dayjs.locale('de');
-                        this.baseUrl = 'https://www.meteox.com/de-de/city/';
+                        this.baseUrl = this.baseUrl;
                     } else {
                         dayjs.locale('en');
                     }
@@ -175,7 +175,7 @@ class DropsWeather extends utils.Adapter {
 
             await page.waitForFunction(() => {
                 return [...document.querySelectorAll('script')].some(script => script.textContent.includes('RainGraph.create({'));
-            }, { timeout: 10000 });
+            }, { timeout: 15000 });
             
             this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
