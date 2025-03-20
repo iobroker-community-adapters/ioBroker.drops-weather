@@ -1,10 +1,10 @@
 'use strict';
-const os = require('node:os');
 
+const utils = require('@iobroker/adapter-core');
+const os = require('node:os');
 const dayjs = require('dayjs');
 require('dayjs/locale/de');
 const utc = require('dayjs/plugin/utc');
-
 const puppeteer = require('puppeteer');
 
 let interval = null;
@@ -12,8 +12,6 @@ let starttimeout = null;
 let watchdog = null;
 let browser = null; 
 let page = null;
-
-const utils = require('@iobroker/adapter-core');
 
 class DropsWeather extends utils.Adapter {
     /**
@@ -95,13 +93,7 @@ class DropsWeather extends utils.Adapter {
                     '--disable-gpu',
                     '--ignore-certificate-errors',
                 ],
-            });
-            
-            page = await browser.newPage();
-
-            await page.setUserAgent(
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            );
+            });                
 
         } catch (e) {
             this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
@@ -171,18 +163,24 @@ class DropsWeather extends utils.Adapter {
 
         this.log.debug(`browser launched, creating new page ...`);
 
+        page = await browser.newPage();
+
+        await page.setUserAgent(
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        );
+        
         try {            
             this.log.debug(`loading ${url}`);
             await page.goto(url, {
                 waitUntil: 'domcontentloaded', // Warten, bis die Seite fertig geladen ist
             });
 
+            await page.waitForFunction(() => {
+                return [...document.querySelectorAll('script')].some(script => script.textContent.includes('RainGraph.create({'));
+            }, { timeout: 10000 });
+            
             this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
-                // // @ts-ignore
-                // const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
-                // labeltext = element ? element.textContent : 'Kein Text gefunden';
-
                 // @ts-expect-error document seems to be defined by puppeteer
                 // eslint-disable-next-line no-undef
                 const scripts = document.querySelectorAll('script'); // ja das ist korrekt so
