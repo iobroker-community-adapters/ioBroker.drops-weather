@@ -52,6 +52,9 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (mcm1957) A spelling erroro blocking chromium-browser manual selection has been corrected.
+  
 ### 1.1.0 (2025-03-19)
 - (mcm1957) support for raspberryPi / arm architecture added
 - (mcm1957) adminUI extended to allow browser selection
