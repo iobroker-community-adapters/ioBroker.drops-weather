@@ -93,7 +93,7 @@ class DropsWeather extends utils.Adapter {
                     this.log.debug(state.common.language);
                     if (state.common.language === 'de') {
                         dayjs.locale('de');
-                        this.baseUrl = this.baseUrl;
+                        this.baseUrl = 'https://www.meteox.com/de-de/city/';
                     } else {
                         dayjs.locale('en');
                     }
@@ -214,7 +214,7 @@ class DropsWeather extends utils.Adapter {
                 this.log.warn('no weatherData found in HTML');
             }
 
-            this.destroyBrowser();
+            this.stop();
 
         } catch (error) {
             this.log.warn(error);
