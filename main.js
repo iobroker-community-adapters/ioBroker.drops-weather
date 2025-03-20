@@ -10,7 +10,6 @@ const puppeteer = require('puppeteer');
 let watchdog = null;
 let browser = null;
 
-
 class DropsWeather extends utils.Adapter {
     /**
      * @param options ioBroker optionen
@@ -78,7 +77,6 @@ class DropsWeather extends utils.Adapter {
         } else {
             this.readDataFromServer();
         }
-
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -134,7 +132,6 @@ class DropsWeather extends utils.Adapter {
 
             this.clearTimeout(watchdog);
             watchdog = null;
-
         } catch (e) {
             this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
             this.disable();
@@ -158,9 +155,14 @@ class DropsWeather extends utils.Adapter {
                 waitUntil: 'networkidle2', // Warten, bis die Seite fertig geladen ist
             });
 
-            await page.waitForFunction(() => {
-                return [...document.querySelectorAll('script')].some(script => script.textContent.includes('RainGraph.create({'));
-            }, { timeout: 10000 });
+            await page.waitForFunction(
+                () => {
+                    return [...document.querySelectorAll('script')].some(script =>
+                        script.textContent.includes('RainGraph.create({'),
+                    );
+                },
+                { timeout: 10000 },
+            );
 
             this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
@@ -215,7 +217,6 @@ class DropsWeather extends utils.Adapter {
             }
 
             this.stop();
-
         } catch (error) {
             this.log.warn(error);
         }
