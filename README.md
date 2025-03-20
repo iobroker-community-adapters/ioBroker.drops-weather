@@ -53,6 +53,7 @@ This adapter would not have been possible without the great work of @inbux (http
 	### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- (arteck) switch to cron 
 - (mcm1957) A spelling erroro blocking chromium-browser manual selection has been corrected.
   
 ### 1.1.0 (2025-03-19)
