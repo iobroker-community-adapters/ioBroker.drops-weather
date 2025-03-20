@@ -10,8 +10,6 @@ const puppeteer = require('puppeteer');
 let interval = null;
 let starttimeout = null;
 let watchdog = null;
-let browser = null;
-let page = null;
 
 class DropsWeather extends utils.Adapter {
     /**
@@ -75,16 +73,52 @@ class DropsWeather extends utils.Adapter {
 
         await this.getLanguage();
 
+        if (this.config.citycode === null || this.config.citycode === '') {
+            this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
+        } else {
+            this.readDataFromServer();
+        }
+
+    }
+
+    //----------------------------------------------------------------------------------------------------
+    async getLanguage() {
+        try {
+            this.log.debug('getting system language');
+            this.getForeignObject('system.config', (err, state) => {
+                if (err || state === undefined || state === null) {
+                    this.log.warn(`no language set in system configuration of ioBroker set to EN`);
+                    dayjs.locale('en');
+                } else {
+                    this.log.debug(state.common.language);
+                    if (state.common.language === 'de') {
+                        dayjs.locale('de');
+                        this.baseUrl = this.baseUrl;
+                    } else {
+                        dayjs.locale('en');
+                    }
+                }
+            });
+        } catch (error) {
+            this.log.warn(error);
+        }
+    }
+    //----------------------------------------------------------------------------------------------------
+    async readDataFromServer() {
+        const url = this.baseUrl + this.config.citycode;
+
         watchdog = this.setTimeout(() => {
             this.log.error('timeout connecting to brower ${this.chromeExecutable}');
             this.disable();
             this.terminate();
-        }, 10_000);
+        }, 10000);
+
+        let browser = null;
 
         try {
             browser = await puppeteer.launch({
                 headless: true,
-                defaultViewport: null,               
+                defaultViewport: null,
                 executablePath: this.chromeExecutable,
                 args: [
                     '--periodic-task',
@@ -110,65 +144,18 @@ class DropsWeather extends utils.Adapter {
             return;
         }
 
-        starttimeout = this.setTimeout(() => {
-            if (this.config.citycode === null || this.config.citycode === '') {
-                this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
-            } else {
-                this.readDataFromServer();
-            }
-        }, 2000);
-
-        interval = this.setInterval(
-            () => {
-                if (this.config.citycode === null || this.config.citycode === '') {
-                    clearInterval(interval);
-                } else {
-                    this.readDataFromServer();
-                }
-            },
-            1000 * 60 * 2,
-        ); // alle 2 min
-    }
-
-    //----------------------------------------------------------------------------------------------------
-    async getLanguage() {
-        try {
-            this.log.debug('getting system language');
-            this.getForeignObject('system.config', (err, state) => {
-                if (err || state === undefined || state === null) {
-                    this.log.warn(`no language set in system configuration of ioBroker set to EN`);
-                    dayjs.locale('en');
-                } else {
-                    this.log.debug(state.common.language);
-                    if (state.common.language === 'de') {
-                        dayjs.locale('de');
-                        this.baseUrl = 'https://www.meteox.com/de-de/city/';
-                    } else {
-                        dayjs.locale('en');
-                    }
-                }
-            });
-        } catch (error) {
-            this.log.warn(error);
-        }
-    }
-    //----------------------------------------------------------------------------------------------------
-    async readDataFromServer() {
-        const url = this.baseUrl + this.config.citycode;
-
         this.log.debug(`Reading data from : ${url}`);
 
         let weatherdataFound = false;
 
         this.log.debug(`creating new page ...`);
+        try {
+            page = await browser.newPage();
 
-        page = await browser.newPage();
+            await page.setUserAgent(
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            );
 
-        await page.setUserAgent(
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        );
-        
-        try {            
             await page.goto(url, {
                 waitUntil: 'networkidle2', // Warten, bis die Seite fertig geladen ist
             });
@@ -176,7 +163,7 @@ class DropsWeather extends utils.Adapter {
             await page.waitForFunction(() => {
                 return [...document.querySelectorAll('script')].some(script => script.textContent.includes('RainGraph.create({'));
             }, { timeout: 10000 });
-            
+
             this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
                 // @ts-expect-error document seems to be defined by puppeteer
@@ -225,11 +212,12 @@ class DropsWeather extends utils.Adapter {
                 }
             }
 
-            await page.close();
-            
             if (!weatherdataFound) {
                 this.log.warn('no weatherData found in HTML');
             }
+
+            this.destroyBrowser();
+
         } catch (error) {
             this.log.warn(error);
         }
@@ -285,8 +273,6 @@ class DropsWeather extends utils.Adapter {
                         }
                     }
                 }
-                //this.log.debug(date.format('HH:mm').toString());
-
                 item_rain['label'] = date.format(dateformat).toString();
                 item_rain['value'] = data[i].precipitationrate.toString();
                 JSONdata_rain.push(item_rain);
