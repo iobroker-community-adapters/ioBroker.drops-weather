@@ -216,9 +216,11 @@ class DropsWeather extends utils.Adapter {
                 this.log.warn('no weatherData found in HTML');
             }
 
-            this.stop();
+           
         } catch (error) {
             this.log.warn(error);
+        } finally {
+           this.stop();
         }
     }
 
