@@ -53,8 +53,8 @@ This adapter would not have been possible without the great work of @inbux (http
 	### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-- (arteck) switch to cron 
-- (mcm1957) A spelling erroro blocking chromium-browser manual selection has been corrected.
+- (arteck) Adapter has been converted to scheduled operation. 
+- (mcm1957) A spelling error blocking chromium-browser manual selection has been corrected.
   
 ### 1.1.0 (2025-03-19)
 - (mcm1957) support for raspberryPi / arm architecture added
