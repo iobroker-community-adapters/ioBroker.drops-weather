@@ -157,6 +157,8 @@ class DropsWeather extends utils.Adapter {
 
             await page.waitForFunction(
                 () => {
+                    // @ts-expect-error document seems to be defined by puppeteer
+                    // eslint-disable-next-line no-undef
                     return [...document.querySelectorAll('script')].some(script =>
                         script.textContent.includes('RainGraph.create({'),
                     );
@@ -215,12 +217,10 @@ class DropsWeather extends utils.Adapter {
             if (!weatherdataFound) {
                 this.log.warn('no weatherData found in HTML');
             }
-
-           
         } catch (error) {
             this.log.warn(error);
         } finally {
-           this.stop();
+            this.stop && this.stop();
         }
     }
 
