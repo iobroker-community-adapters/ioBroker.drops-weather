@@ -3,7 +3,5 @@
 !.vscode/
 !.github/
 
-.dev-server/
-
 *.code-workspace
 node_modules
