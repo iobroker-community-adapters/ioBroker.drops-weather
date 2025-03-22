@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.1.0",
+    "version": "1.2.0-alpha.0",
     "news": {
+      "1.2.0-alpha.0": {
+        "en": "Adapter has been converted to scheduled operation. \nA spelling error blocking chromium-browser manual selection has been corrected.",
+        "de": "Adapter wurde in den geplanten Betrieb umgewandelt.\nEin Schreibfehler, der die manuelle Auswahl des Chrom-Browsers blockiert, wurde korrigiert.",
+        "ru": "Адаптер был преобразован в плановую работу.\nБыла исправлена орфографическая ошибка, блокирующая ручной выбор хрома-браузера.",
+        "pt": "O adaptador foi convertido para operação agendada.\nUma seleção manual de bloqueio de erro de ortografia do cromo-browser foi corrigida.",
+        "nl": "Adapter is omgezet in geplande werking.\nEen spelfout blokkeren chroom-browser handmatige selectie is gecorrigeerd.",
+        "fr": "L'adaptateur a été converti en fonctionnement programmé.\nUne erreur d'orthographe bloquant la sélection manuelle du navigateur chrome a été corrigée.",
+        "it": "L'adattatore è stato convertito in funzionamento programmato.\nÈ stato corretto un errore di ortografia che blocca la selezione manuale del cromo-browser.",
+        "es": "El adaptador se ha convertido en operación programada.\nSe ha corregido una selección manual de bloqueo de errores de ortografía.",
+        "pl": "Adapter został przekształcony w operację planową.\nBłąd pisowni blokujący wybór podręcznika przeglądarki chromii został poprawiony.",
+        "uk": "Перетворено перехід на заплановану операцію.\nВиправлено помилку, що блокує хром-коричневий ручний вибір.",
+        "zh-cn": "适配器已转换为预定操作.\n拼写错误阻断铬-浏览器手动选择已经改正."
+      },
       "1.1.0": {
         "en": "support for raspberryPi / arm architecture added\nadminUI extended to allow browser selection\ndependencies have been updated",
         "de": "unterstützung für Himbeere Pi / Arm Architektur hinzugefügt\nadmin UI erweitert um Browserauswahl zu ermöglichen\nabhängigkeiten wurden aktualisiert",
