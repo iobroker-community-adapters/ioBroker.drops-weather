@@ -33,13 +33,13 @@ class DropsWeather extends utils.Adapter {
         if (!this.config.browserMode) {
             this.config.browserMode = 'automatic';
         }
-        this.log.info(`browserMode set to ${this.config.browserMode}`);
+        this.log.info(`browserMode set to ${this.config.browserMode}, running on ${os.platform} / ${os.arch}`);
         this.chromeExecutable = undefined;
 
         if (this.config.browserMode === 'built-in') {
             if (os.arch() === 'arm') {
                 this.log.error(
-                    `browser mode ${this.config.browserMode} not supported at platform ${os.platform()} / ${os.arch()}`,
+                    `browser mode ${this.config.browserMode} not supported on platform ${os.platform()} / ${os.arch()}`,
                 );
                 this.disable();
                 this.terminate();
@@ -48,7 +48,7 @@ class DropsWeather extends utils.Adapter {
         } else if (this.config.browserMode === 'chromium-browser') {
             if (os.platform() !== 'linux' || os.arch() !== 'arm') {
                 this.log.error(
-                    `browser mode ${this.config.browserMode} not supported at platform ${os.platform()} / ${os.arch()}`,
+                    `browser mode ${this.config.browserMode} not supported on platform ${os.platform()} / ${os.arch()}`,
                 );
                 this.disable();
                 this.terminate();
@@ -111,24 +111,29 @@ class DropsWeather extends utils.Adapter {
             this.terminate();
         }, 10000);
 
+        const puppeteerLaunchCfg = {
+            headless: true,
+            defaultViewport: null,
+            executablePath: this.chromeExecutable,
+            args: [
+                '--periodic-task',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process',
+                '--disable-gpu',
+                '--ignore-certificate-errors',
+            ],
+        };
+        if (this.chromeExecutable) {
+            puppeteerLaunchCfg[puppeteer.executablePath] = this.chromeExecutable;
+        }
+        this.log.debug(`puppeteer.lauch invoked with ${JSON.stringify(puppeteerLaunchCfg)}`);
         try {
-            browser = await puppeteer.launch({
-                headless: true,
-                defaultViewport: null,
-                executablePath: this.chromeExecutable,
-                args: [
-                    '--periodic-task',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                    '--disable-accelerated-2d-canvas',
-                    '--no-first-run',
-                    '--no-zygote',
-                    '--single-process',
-                    '--disable-gpu',
-                    '--ignore-certificate-errors',
-                ],
-            });
+            browser = await puppeteer.launch(puppeteerLaunchCfg);
 
             this.clearTimeout(watchdog);
             watchdog = null;
