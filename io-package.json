@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.0-alpha.0",
+    "version": "1.2.0-alpha.1",
     "news": {
+      "1.2.0-alpha.1": {
+        "en": "Timeout has been encreased to 15s.",
+        "de": "Timeout wurde auf 15s erhöht.",
+        "ru": "Время ожидания увеличено до 15.",
+        "pt": "O timeout foi aumentado para 15.",
+        "nl": "De time-out is verhoogd naar 15 jaar.",
+        "fr": "Le délai est passé à 15 ans.",
+        "it": "Il timeout è stato aumentato a 15 anni.",
+        "es": "El tiempo ha aumentado a 15 años.",
+        "pl": "Czas minął do 15.",
+        "uk": "Відбувся час до 15-х років.",
+        "zh-cn": "暂停时间已缩短至15秒."
+      },
       "1.2.0-alpha.0": {
         "en": "Adapter has been converted to scheduled operation. \nA spelling error blocking chromium-browser manual selection has been corrected.",
         "de": "Adapter wurde in den geplanten Betrieb umgewandelt.\nEin Schreibfehler, der die manuelle Auswahl des Chrom-Browsers blockiert, wurde korrigiert.",
