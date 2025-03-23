@@ -98,7 +98,7 @@ class DropsWeather extends utils.Adapter {
                 }
             });
         } catch (error) {
-            this.log.warn(error);
+            this.log.warn(`error retrieving system language: ${error}`);
         }
     }
     //----------------------------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ class DropsWeather extends utils.Adapter {
                         script.textContent.includes('RainGraph.create({'),
                     );
                 },
-                { timeout: 10000 },
+                { timeout: 15000 },
             );
 
             this.log.debug(`domcontent loaded, evaluate page`);
