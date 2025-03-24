@@ -33,7 +33,7 @@ class DropsWeather extends utils.Adapter {
         if (!this.config.browserMode) {
             this.config.browserMode = 'automatic';
         }
-        this.log.info(`browserMode set to ${this.config.browserMode}, running on ${os.platform} / ${os.arch}`);
+        this.log.debug(`browserMode set to ${this.config.browserMode}, running on ${os.platform} / ${os.arch}`);
         this.chromeExecutable = undefined;
 
         if (this.config.browserMode === 'built-in') {
@@ -62,13 +62,15 @@ class DropsWeather extends utils.Adapter {
                 this.chromeExecutable = '/usr/bin/chromium-browser';
             }
         } else {
-            this.log.error(`browser mode ${this.config.browserMode} not (yet) supported`);
+            this.log.error(
+                `browser mode ${this.config.browserMode} not (yet) supported, running on ${os.platform} / ${os.arch}`,
+            );
             this.disable();
             this.terminate();
             return;
         }
 
-        this.log.info(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
+        this.log.debug(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
 
         await this.getLanguage();
 

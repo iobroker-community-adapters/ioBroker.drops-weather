@@ -52,10 +52,9 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### 1.2.0-alpha.1 (2025-03-23)
+### **WORK IN PROGRESS**
 - (mcm1957) Timeout has been encreased to 15s.
-
-### 1.2.0-alpha.0 (2025-03-22)
+- (mcm1957) Logging has been reduced.
 - (arteck) Adapter has been converted to scheduled operation. 
 - (mcm1957) A spelling error blocking chromium-browser manual selection has been corrected.
 
