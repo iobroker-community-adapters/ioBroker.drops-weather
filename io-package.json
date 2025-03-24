@@ -1,33 +1,20 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.0-alpha.1",
+    "version": "1.2.0",
     "news": {
-      "1.2.0-alpha.1": {
-        "en": "Timeout has been encreased to 15s.",
-        "de": "Timeout wurde auf 15s erhöht.",
-        "ru": "Время ожидания увеличено до 15.",
-        "pt": "O timeout foi aumentado para 15.",
-        "nl": "De time-out is verhoogd naar 15 jaar.",
-        "fr": "Le délai est passé à 15 ans.",
-        "it": "Il timeout è stato aumentato a 15 anni.",
-        "es": "El tiempo ha aumentado a 15 años.",
-        "pl": "Czas minął do 15.",
-        "uk": "Відбувся час до 15-х років.",
-        "zh-cn": "暂停时间已缩短至15秒."
-      },
-      "1.2.0-alpha.0": {
-        "en": "Adapter has been converted to scheduled operation. \nA spelling error blocking chromium-browser manual selection has been corrected.",
-        "de": "Adapter wurde in den geplanten Betrieb umgewandelt.\nEin Schreibfehler, der die manuelle Auswahl des Chrom-Browsers blockiert, wurde korrigiert.",
-        "ru": "Адаптер был преобразован в плановую работу.\nБыла исправлена орфографическая ошибка, блокирующая ручной выбор хрома-браузера.",
-        "pt": "O adaptador foi convertido para operação agendada.\nUma seleção manual de bloqueio de erro de ortografia do cromo-browser foi corrigida.",
-        "nl": "Adapter is omgezet in geplande werking.\nEen spelfout blokkeren chroom-browser handmatige selectie is gecorrigeerd.",
-        "fr": "L'adaptateur a été converti en fonctionnement programmé.\nUne erreur d'orthographe bloquant la sélection manuelle du navigateur chrome a été corrigée.",
-        "it": "L'adattatore è stato convertito in funzionamento programmato.\nÈ stato corretto un errore di ortografia che blocca la selezione manuale del cromo-browser.",
-        "es": "El adaptador se ha convertido en operación programada.\nSe ha corregido una selección manual de bloqueo de errores de ortografía.",
-        "pl": "Adapter został przekształcony w operację planową.\nBłąd pisowni blokujący wybór podręcznika przeglądarki chromii został poprawiony.",
-        "uk": "Перетворено перехід на заплановану операцію.\nВиправлено помилку, що блокує хром-коричневий ручний вибір.",
-        "zh-cn": "适配器已转换为预定操作.\n拼写错误阻断铬-浏览器手动选择已经改正."
+      "1.2.0": {
+        "en": "Timeout has been encreased to 15s.\nLogging has been reduced.\nAdapter has been converted to scheduled operation. \nA spelling error blocking chromium-browser manual selection has been corrected.",
+        "de": "Timeout wurde auf 15s erhöht.\nDie Protokollierung wurde reduziert.\nAdapter wurde aus scheduled Mode umgestellt.\nEin Schreibfehler, der die manuelle Auswahl des Chrom-Browsers blockiert, wurde korrigiert.",
+        "ru": "Время ожидания увеличено до 15.\nЛесозаготовки были сокращены.\nАдаптер был преобразован в плановую работу.\nБыла исправлена орфографическая ошибка, блокирующая ручной выбор хрома-браузера.",
+        "pt": "O timeout foi aumentado para 15.\nO roubo foi reduzido.\nO adaptador foi convertido para operação agendada.\nUma seleção manual de bloqueio de erro de ortografia do cromo-browser foi corrigida.",
+        "nl": "De time-out is verhoogd naar 15 jaar.\nHet loggen is verminderd.\nAdapter is omgezet in geplande werking.\nEen spelfout blokkeren chroom-browser handmatige selectie is gecorrigeerd.",
+        "fr": "Le délai est passé à 15 ans.\nL'exploitation forestière a été réduite.\nL'adaptateur a été converti en fonctionnement programmé.\nUne erreur d'orthographe bloquant la sélection manuelle du navigateur chrome a été corrigée.",
+        "it": "Il timeout è stato aumentato a 15 anni.\nLogging è stato ridotto.\nL'adattatore è stato convertito in funzionamento programmato.\nÈ stato corretto un errore di ortografia che blocca la selezione manuale del cromo-browser.",
+        "es": "El tiempo ha aumentado a 15 años.\nSe ha reducido el registro.\nEl adaptador se ha convertido en operación programada.\nSe ha corregido una selección manual de bloqueo de errores de ortografía.",
+        "pl": "Czas minął do 15.\nZmniejszono logowanie.\nAdapter został przekształcony w operację planową.\nBłąd pisowni blokujący wybór podręcznika przeglądarki chromii został poprawiony.",
+        "uk": "Відбувся час до 15-х років.\nСкорочення було зменшено.\nПеретворено перехід на заплановану операцію.\nВиправлено помилку, що блокує хром-коричневий ручний вибір.",
+        "zh-cn": "暂停时间已缩短至15秒.\n采伐已经减少.\n适配器已转换为预定操作.\n拼写错误阻断铬-浏览器手动选择已经改正."
       },
       "1.1.0": {
         "en": "support for raspberryPi / arm architecture added\nadminUI extended to allow browser selection\ndependencies have been updated",

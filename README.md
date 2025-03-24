@@ -52,7 +52,7 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.2.0 (2025-03-24)
 - (mcm1957) Timeout has been encreased to 15s.
 - (mcm1957) Logging has been reduced.
 - (arteck) Adapter has been converted to scheduled operation. 
@@ -77,6 +77,9 @@ This adapter would not have been possible without the great work of @inbux (http
 - (inbux) GPS position is not longer supported on the website, added city code in configuration
 - (inbux) removed temperture because this data is not longer available
 - (inbux) updated readme
+
+### 0.2.3 (2024-01-17)
+- (inbux) updated dependencies
 
 ## License
 
