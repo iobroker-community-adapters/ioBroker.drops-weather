@@ -2,9 +2,7 @@
 
 const utils = require('@iobroker/adapter-core');
 const os = require('node:os');
-const dayjs = require('dayjs');
-require('dayjs/locale/de');
-const utc = require('dayjs/plugin/utc');
+
 const puppeteer = require('puppeteer');
 
 let watchdog = null;
@@ -20,7 +18,8 @@ class DropsWeather extends utils.Adapter {
             name: 'drops-weather',
         });
 
-        this.baseUrl = 'https://www.meteox.com/en-gb/city/';
+        //this.baseUrl = 'https://www.meteox.com/en-gb/city/';
+        this.baseUrl = 'https://www.meteox.com/de-de/city/';
 
         this.on('ready', this.onReady.bind(this));
         this.on('unload', this.onUnload.bind(this));
@@ -71,9 +70,7 @@ class DropsWeather extends utils.Adapter {
         }
 
         this.log.debug(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
-
-        await this.getLanguage();
-
+        
         if (this.config.citycode === null || this.config.citycode === '') {
             this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
         } else {
@@ -81,28 +78,7 @@ class DropsWeather extends utils.Adapter {
         }
     }
 
-    //----------------------------------------------------------------------------------------------------
-    async getLanguage() {
-        try {
-            this.log.debug('getting system language');
-            this.getForeignObject('system.config', (err, state) => {
-                if (err || state === undefined || state === null) {
-                    this.log.warn(`no language set in system configuration of ioBroker set to EN`);
-                    dayjs.locale('en');
-                } else {
-                    this.log.debug(state.common.language);
-                    if (state.common.language === 'de') {
-                        dayjs.locale('de');
-                        this.baseUrl = 'https://www.meteox.com/de-de/city/';
-                    } else {
-                        dayjs.locale('en');
-                    }
-                }
-            });
-        } catch (error) {
-            this.log.warn(`error retrieving system language: ${error}`);
-        }
-    }
+   
     //----------------------------------------------------------------------------------------------------
     async readDataFromServer() {
         const url = this.baseUrl + this.config.citycode;
@@ -266,11 +242,8 @@ class DropsWeather extends utils.Adapter {
                 const item_rain = {};
                 const item_rain_echart = {};
 
-                //const dat = data[i].time;
-                const date = dayjs(data[i].time);
-
-                dayjs.extend(utc);
-                const timestamp = dayjs.utc(data[i].time).valueOf();
+                const date = new Date(data[i].time);
+                const timestamp = Date.parse(date.toISOString());
 
                 if (rainStartsAt == '-1') {
                     if (data[i].precipitationrate > 0) {
