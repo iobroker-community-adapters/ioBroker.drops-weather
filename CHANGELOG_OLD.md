@@ -1,4 +1,7 @@
 # Older Changelogs
+## 0.2.3 (2024-01-17)
+- (inbux) updated dependencies
+
 ## 0.2.2 (2024-01-17)
 - (inbux) changed URL from drops.live to www.drops.live (thanks to Marc-Berg)
 - (inbux) small changes because of axios update
