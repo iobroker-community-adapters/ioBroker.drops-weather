@@ -114,7 +114,8 @@
   "native": {
     "citycode": "",
     "browserMode": "",
-    "browserPath": ""
+    "browserPath": "",
+    "language": "de"
   },
   "objects": [],
   "instanceObjects": [

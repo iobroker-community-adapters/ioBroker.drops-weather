@@ -12,5 +12,6 @@
     "lblBrowserMode": "浏览器模式",
     "lblBrowserPath": "浏览器路径",
     "hdrSetupGuide": "设置指南",
-    "hdrConfiguration": "配置"
+    "hdrConfiguration": "配置",
+    "lblLang": "语言"
 }

@@ -12,5 +12,6 @@
     "lblBrowserMode": "Browsermodus",
     "lblBrowserPath": "Browserpfad",
     "hdrSetupGuide": "Setup -Handbuch",
-    "hdrConfiguration": "Konfiguration"
+    "hdrConfiguration": "Konfiguration",
+    "lblLang": "Sprache"
 }

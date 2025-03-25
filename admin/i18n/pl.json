@@ -12,5 +12,6 @@
     "lblBrowserMode": "Tryb przeglądarki",
     "lblBrowserPath": "Ścieżka przeglądarki",
     "hdrSetupGuide": "Przewodnik konfiguracji",
-    "hdrConfiguration": "Konfiguracja"
+    "hdrConfiguration": "Konfiguracja",
+    "lblLang": "Język"
 }

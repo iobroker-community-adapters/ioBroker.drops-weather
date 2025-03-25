@@ -2,9 +2,7 @@
 
 const utils = require('@iobroker/adapter-core');
 const os = require('node:os');
-const dayjs = require('dayjs');
-require('dayjs/locale/de');
-const utc = require('dayjs/plugin/utc');
+
 const puppeteer = require('puppeteer');
 
 let watchdog = null;
@@ -19,8 +17,6 @@ class DropsWeather extends utils.Adapter {
             ...options,
             name: 'drops-weather',
         });
-
-        this.baseUrl = 'https://www.meteox.com/en-gb/city/';
 
         this.on('ready', this.onReady.bind(this));
         this.on('unload', this.onUnload.bind(this));
@@ -71,9 +67,7 @@ class DropsWeather extends utils.Adapter {
         }
 
         this.log.debug(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
-
-        await this.getLanguage();
-
+        
         if (this.config.citycode === null || this.config.citycode === '') {
             this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
         } else {
@@ -81,31 +75,11 @@ class DropsWeather extends utils.Adapter {
         }
     }
 
-    //----------------------------------------------------------------------------------------------------
-    async getLanguage() {
-        try {
-            this.log.debug('getting system language');
-            this.getForeignObject('system.config', (err, state) => {
-                if (err || state === undefined || state === null) {
-                    this.log.warn(`no language set in system configuration of ioBroker set to EN`);
-                    dayjs.locale('en');
-                } else {
-                    this.log.debug(state.common.language);
-                    if (state.common.language === 'de') {
-                        dayjs.locale('de');
-                        this.baseUrl = 'https://www.meteox.com/de-de/city/';
-                    } else {
-                        dayjs.locale('en');
-                    }
-                }
-            });
-        } catch (error) {
-            this.log.warn(`error retrieving system language: ${error}`);
-        }
-    }
+   
     //----------------------------------------------------------------------------------------------------
     async readDataFromServer() {
-        const url = this.baseUrl + this.config.citycode;
+    
+        const url = 'https://www.meteox.com/' + this.config.language + '/city/' + this.config.citycode;
 
         watchdog = this.setTimeout(() => {
             this.log.error('timeout connecting to brower ${this.chromeExecutable}');
@@ -237,73 +211,56 @@ class DropsWeather extends utils.Adapter {
 
     //----------------------------------------------------------------------------------------------------
     async createStateData(data, channel) {
-        try {
-            let JSONdata_rain = [];
-            let JSONdata_echart = [];
-            let raindata = [];
-            let isRainingNow = false;
-            let rainStartsAt = '-1';
-            let rainStartAmount = 0;
-            let dateformat = 'HH:mm';
+      try {
+          let JSONdata_rain = [];
+          let JSONdata_echart = [];
+          let raindata = [];
+          let isRainingNow = data[0]?.precipitationrate > 0;
+          let rainStartsAt = '-1';
+          let rainStartAmount = 0;
+          let dateformat = 'HH:mm';
 
-            if (channel == 'data_1h') {
-                dateformat = 'dd HH:mm';
-            }
-            //	this.log.info(JSON.stringify(data));
+          if (channel === 'data_1h') {
+              dateformat = 'dd HH:mm';
+          }
 
-            if (data[0].precipitationrate > 0) {
-                isRainingNow = true;
-            }
+          this.setStateAsync(`${channel}.isRainingNow`, { val: isRainingNow, ack: true });
 
-            this.setStateAsync(`${channel}.isRainingNow`, { val: isRainingNow, ack: true });
+          await this.setStateAsync(`${channel}.timestamp`, { val: data[0]?.time || '', ack: true });
+          await this.setStateAsync(`${channel}.actualRain`, { val: data[0]?.precipitationrate || 0, ack: true });
 
-            await this.setStateAsync(`${channel}.timestamp`, { val: data[0].time, ack: true });
-            await this.setStateAsync(`${channel}.actualRain`, { val: data[0].precipitationrate, ack: true });
+          for (const item of data) {
+              raindata.push(item.precipitationrate);
 
-            for (const i in data) {
-                raindata.push(data[i].precipitationrate);
+              const date = new Date(item.time);
+              const timestamp = date.getTime(); 
 
-                const item_rain = {};
-                const item_rain_echart = {};
+              if (rainStartsAt === '-1' && item.precipitationrate > 0) {
+                  rainStartsAt = date.toISOString();
+                  rainStartAmount = item.c ?? 0;
+              }
 
-                //const dat = data[i].time;
-                const date = dayjs(data[i].time);
+              JSONdata_rain.push({
+                  label: date.toLocaleTimeString('de-de', { hour: '2-digit', minute: '2-digit' }), // fromatiere ausgabe
+                  value: item.precipitationrate.toString(),
+              });
 
-                dayjs.extend(utc);
-                const timestamp = dayjs.utc(data[i].time).valueOf();
+              JSONdata_echart.push({
+                  ts: timestamp,
+                  val: item.precipitationrate,
+              });
+          }
 
-                if (rainStartsAt == '-1') {
-                    if (data[i].precipitationrate > 0) {
-                        rainStartsAt = date.format('YYYY-MM-DDTHH:mm:ssZ');
-                        rainStartAmount = 0;
-                        if (data[i].c != undefined) {
-                            rainStartAmount = data[i].c;
-                        }
-                    }
-                }
-                item_rain['label'] = date.format(dateformat).toString();
-                item_rain['value'] = data[i].precipitationrate.toString();
-                JSONdata_rain.push(item_rain);
+          this.log.debug(`Rain (${channel}): ${JSON.stringify(JSONdata_rain)}`);
 
-                item_rain_echart['ts'] = timestamp;
-                item_rain_echart['val'] = data[i].precipitationrate;
-                JSONdata_echart.push(item_rain_echart);
-            }
-            JSONdata_rain = JSON.parse(JSON.stringify(JSONdata_rain));
-            JSONdata_echart = JSON.parse(JSON.stringify(JSONdata_echart));
-
-            raindata = JSON.parse(JSON.stringify(raindata));
-
-            this.log.debug(`Rain (${channel}): ${JSON.stringify(JSONdata_rain)}`);
-
-            await this.setStateAsync(`${channel}.chartRain`, { val: JSON.stringify(JSONdata_rain), ack: true });
-            await this.setStateAsync(`${channel}.echartRain`, { val: JSON.stringify(JSONdata_echart), ack: true });
-            await this.setStateAsync(`${channel}.raindata`, { val: JSON.stringify(raindata), ack: true });
-            await this.setStateAsync(`${channel}.rainStartsAt`, { val: rainStartsAt, ack: true });
-            await this.setStateAsync(`${channel}.startRain`, { val: rainStartAmount, ack: true });
-        } catch (error) {
-            this.log.error(error);
-        }
+          await this.setStateAsync(`${channel}.chartRain`, { val: JSON.stringify(JSONdata_rain), ack: true });
+          await this.setStateAsync(`${channel}.echartRain`, { val: JSON.stringify(JSONdata_echart), ack: true });
+          await this.setStateAsync(`${channel}.raindata`, { val: JSON.stringify(raindata), ack: true });
+          await this.setStateAsync(`${channel}.rainStartsAt`, { val: rainStartsAt, ack: true });
+          await this.setStateAsync(`${channel}.startRain`, { val: rainStartAmount, ack: true });
+      } catch (error) {
+          this.log.error(error);
+      }
     }
 
     async destroyBrowser() {
