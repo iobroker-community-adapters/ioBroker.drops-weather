@@ -12,5 +12,6 @@
     "lblBrowserMode": "Browsermodus",
     "lblBrowserPath": "Browserpad",
     "hdrSetupGuide": "Setup -gids",
-    "hdrConfiguration": "Configuratie"
+    "hdrConfiguration": "Configuratie",
+    "lblLang": "Taal"
 }

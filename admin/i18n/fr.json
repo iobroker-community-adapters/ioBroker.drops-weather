@@ -12,5 +12,6 @@
     "lblBrowserMode": "Mode navigateur",
     "lblBrowserPath": "Chemin du navigateur",
     "hdrSetupGuide": "Guide de configuration",
-    "hdrConfiguration": "Configuration"
+    "hdrConfiguration": "Configuration",
+    "lblLang": "Langue"
 }

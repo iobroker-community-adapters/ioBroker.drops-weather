@@ -8,5 +8,6 @@
     "lblLocationText": "Please enter your city code from www.drops.live url (e.g. for 'Berlin' => 6573)",
     "lblBrowserCfg": "Browser Configuration",
     "lblBrowserMode": "Browser Mode",
-    "lblBrowserPath": "Browser Path"
+    "lblBrowserPath": "Browser Path",
+    "lblLang": "Language"
 }

@@ -87,7 +87,30 @@
 					"md": 8,
 					"lg": 6,
 					"xl": 4
-				}
+				},
+				"language": {
+					"type": "select",
+					"label": "lblLang",
+					"options": [
+						  {"label": "de", "value": "de-de"},
+              {"label": "en", "value": "en-gb"},
+              {"label": "ru", "value": "en-gb"},
+              {"label": "pt", "value": "en-gb"},
+              {"label": "nl", "value": "en-gb"},
+              {"label": "fr", "value": "en-gb"},
+              {"label": "it", "value": "en-gb"},
+              {"label": "es", "value": "en-gb"},
+              {"label": "pl", "value": "en-gb"},
+              {"label": "uk", "value": "en-gb"},
+              {"label": "zh-cn", "value": "en-gb"}
+					],
+					"default": "de",
+					"xs": 12,
+					"sm": 10,
+					"md": 8,
+					"lg": 6,
+					"xl": 4
+				}  				
 			}
 		},
 		"_puppeteer": {
