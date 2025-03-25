@@ -52,6 +52,12 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 1.2.0 (2025-03-24)
+- (mcm1957) Timeout has been encreased to 15s.
+- (mcm1957) Logging has been reduced.
+- (arteck) Adapter has been converted to scheduled operation. 
+- (mcm1957) A spelling error blocking chromium-browser manual selection has been corrected.
+
 ### 1.1.0 (2025-03-19)
 - (mcm1957) support for raspberryPi / arm architecture added
 - (mcm1957) adminUI extended to allow browser selection
@@ -74,11 +80,6 @@ This adapter would not have been possible without the great work of @inbux (http
 
 ### 0.2.3 (2024-01-17)
 - (inbux) updated dependencies
-
-### 0.2.2 (2024-01-17)
-- (inbux) changed URL from drops.live to www.drops.live (thanks to Marc-Berg)
-- (inbux) small changes because of axios update
-- (inbux) changed units to mm/h
 
 ## License
 

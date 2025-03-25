@@ -1,4 +1,9 @@
 # Older Changelogs
+## 0.2.2 (2024-01-17)
+- (inbux) changed URL from drops.live to www.drops.live (thanks to Marc-Berg)
+- (inbux) small changes because of axios update
+- (inbux) changed units to mm/h
+
 ## 0.2.1 (2022-10-02)
 - (inbux) added actualRain
 - (inbux) reading system language for weekdays localization

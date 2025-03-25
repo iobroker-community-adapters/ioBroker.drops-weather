@@ -100,7 +100,7 @@
 					"options": [
 						{"label": "automatic", "value": "automatic"},
 						{"label": "built-in", "value": "built-in"},
-						{"label": "chromium-browser", "value": "chromkum-browser"},
+						{"label": "chromium-browser", "value": "chromium-browser"},
 						{"label": "external", "value": "external"}
 					],
 					"default": "automatic",

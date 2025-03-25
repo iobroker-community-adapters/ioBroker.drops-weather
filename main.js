@@ -7,11 +7,8 @@ require('dayjs/locale/de');
 const utc = require('dayjs/plugin/utc');
 const puppeteer = require('puppeteer');
 
-let interval = null;
-let starttimeout = null;
 let watchdog = null;
 let browser = null;
-let page = null;
 
 class DropsWeather extends utils.Adapter {
     /**
@@ -36,13 +33,13 @@ class DropsWeather extends utils.Adapter {
         if (!this.config.browserMode) {
             this.config.browserMode = 'automatic';
         }
-        this.log.info(`browserMode set to ${this.config.browserMode}`);
+        this.log.debug(`browserMode set to ${this.config.browserMode}, running on ${os.platform} / ${os.arch}`);
         this.chromeExecutable = undefined;
 
         if (this.config.browserMode === 'built-in') {
             if (os.arch() === 'arm') {
                 this.log.error(
-                    `browser mode ${this.config.browserMode} not supported at platform ${os.platform()} / ${os.arch()}`,
+                    `browser mode ${this.config.browserMode} not supported on platform ${os.platform()} / ${os.arch()}`,
                 );
                 this.disable();
                 this.terminate();
@@ -51,7 +48,7 @@ class DropsWeather extends utils.Adapter {
         } else if (this.config.browserMode === 'chromium-browser') {
             if (os.platform() !== 'linux' || os.arch() !== 'arm') {
                 this.log.error(
-                    `browser mode ${this.config.browserMode} not supported at platform ${os.platform()} / ${os.arch()}`,
+                    `browser mode ${this.config.browserMode} not supported on platform ${os.platform()} / ${os.arch()}`,
                 );
                 this.disable();
                 this.terminate();
@@ -65,69 +62,23 @@ class DropsWeather extends utils.Adapter {
                 this.chromeExecutable = '/usr/bin/chromium-browser';
             }
         } else {
-            this.log.error(`browser mode ${this.config.browserMode} not (yet) supported`);
+            this.log.error(
+                `browser mode ${this.config.browserMode} not (yet) supported, running on ${os.platform} / ${os.arch}`,
+            );
             this.disable();
             this.terminate();
             return;
         }
 
-        this.log.info(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
+        this.log.debug(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
 
         await this.getLanguage();
 
-        watchdog = this.setTimeout(() => {
-            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
-            this.disable();
-            this.terminate();
-        }, 10000);
-
-        try {
-            browser = await puppeteer.launch({
-                headless: true,
-                defaultViewport: null,               
-                executablePath: this.chromeExecutable,
-                args: [
-                    '--periodic-task',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                    '--disable-accelerated-2d-canvas',
-                    '--no-first-run',
-                    '--no-zygote',
-                    '--single-process',
-                    '--disable-gpu',
-                    '--ignore-certificate-errors',
-                ],
-            });
-
-            this.clearTimeout(watchdog);
-            watchdog = null;
-
-        } catch (e) {
-            this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
-            this.disable();
-            this.terminate();
-            return;
+        if (this.config.citycode === null || this.config.citycode === '') {
+            this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
+        } else {
+            this.readDataFromServer();
         }
-
-        starttimeout = this.setTimeout(() => {
-            if (this.config.citycode === null || this.config.citycode === '') {
-                this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
-            } else {
-                this.readDataFromServer();
-            }
-        }, 2000);
-
-        interval = this.setInterval(
-            () => {
-                if (this.config.citycode === null || this.config.citycode === '') {
-                    clearInterval(interval);
-                } else {
-                    this.readDataFromServer();
-                }
-            },
-            1000 * 60 * 2,
-        ); // alle 2 min
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -142,41 +93,86 @@ class DropsWeather extends utils.Adapter {
                     this.log.debug(state.common.language);
                     if (state.common.language === 'de') {
                         dayjs.locale('de');
-                        this.baseUrl = this.baseUrl;
+                        this.baseUrl = 'https://www.meteox.com/de-de/city/';
                     } else {
                         dayjs.locale('en');
                     }
                 }
             });
         } catch (error) {
-            this.log.warn(error);
+            this.log.warn(`error retrieving system language: ${error}`);
         }
     }
     //----------------------------------------------------------------------------------------------------
     async readDataFromServer() {
         const url = this.baseUrl + this.config.citycode;
 
+        watchdog = this.setTimeout(() => {
+            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
+            this.disable();
+            this.terminate();
+        }, 10000);
+
+        const puppeteerLaunchCfg = {
+            headless: true,
+            defaultViewport: null,
+            executablePath: this.chromeExecutable,
+            args: [
+                '--periodic-task',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process',
+                '--disable-gpu',
+                '--ignore-certificate-errors',
+            ],
+        };
+        if (this.chromeExecutable) {
+            puppeteerLaunchCfg[puppeteer.executablePath] = this.chromeExecutable;
+        }
+        this.log.debug(`puppeteer.lauch invoked with ${JSON.stringify(puppeteerLaunchCfg)}`);
+        try {
+            browser = await puppeteer.launch(puppeteerLaunchCfg);
+
+            this.clearTimeout(watchdog);
+            watchdog = null;
+        } catch (e) {
+            this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
+            this.disable();
+            this.terminate();
+            return;
+        }
+
         this.log.debug(`Reading data from : ${url}`);
 
         let weatherdataFound = false;
 
         this.log.debug(`creating new page ...`);
+        try {
+            const page = await browser.newPage();
 
-        page = await browser.newPage();
+            await page.setUserAgent(
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            );
 
-        await page.setUserAgent(
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        );
-        
-        try {            
             await page.goto(url, {
                 waitUntil: 'networkidle2', // Warten, bis die Seite fertig geladen ist
             });
 
-            await page.waitForFunction(() => {
-                return [...document.querySelectorAll('script')].some(script => script.textContent.includes('RainGraph.create({'));
-            }, { timeout: 15000 });
-            
+            await page.waitForFunction(
+                () => {
+                    // @ts-expect-error document seems to be defined by puppeteer
+                    // eslint-disable-next-line no-undef
+                    return [...document.querySelectorAll('script')].some(script =>
+                        script.textContent.includes('RainGraph.create({'),
+                    );
+                },
+                { timeout: 15000 },
+            );
+
             this.log.debug(`domcontent loaded, evaluate page`);
             const scriptContents = await page.evaluate(() => {
                 // @ts-expect-error document seems to be defined by puppeteer
@@ -225,13 +221,13 @@ class DropsWeather extends utils.Adapter {
                 }
             }
 
-            await page.close();
-            
             if (!weatherdataFound) {
                 this.log.warn('no weatherData found in HTML');
             }
         } catch (error) {
             this.log.warn(error);
+        } finally {
+            this.stop && this.stop();
         }
     }
 
@@ -285,8 +281,6 @@ class DropsWeather extends utils.Adapter {
                         }
                     }
                 }
-                //this.log.debug(date.format('HH:mm').toString());
-
                 item_rain['label'] = date.format(dateformat).toString();
                 item_rain['value'] = data[i].precipitationrate.toString();
                 JSONdata_rain.push(item_rain);
@@ -330,8 +324,6 @@ class DropsWeather extends utils.Adapter {
     onUnload(callback) {
         try {
             this.destroyBrowser();
-            this.clearInterval(interval);
-            this.clearTimeout(starttimeout);
             this.clearTimeout(watchdog);
             callback();
         } catch {
