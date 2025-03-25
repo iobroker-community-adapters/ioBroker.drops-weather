@@ -213,70 +213,56 @@ class DropsWeather extends utils.Adapter {
 
     //----------------------------------------------------------------------------------------------------
     async createStateData(data, channel) {
-        try {
-            let JSONdata_rain = [];
-            let JSONdata_echart = [];
-            let raindata = [];
-            let isRainingNow = false;
-            let rainStartsAt = '-1';
-            let rainStartAmount = 0;
-            let dateformat = 'HH:mm';
+      try {
+          let JSONdata_rain = [];
+          let JSONdata_echart = [];
+          let raindata = [];
+          let isRainingNow = data[0]?.precipitationrate > 0;
+          let rainStartsAt = '-1';
+          let rainStartAmount = 0;
+          let dateformat = 'HH:mm';
 
-            if (channel == 'data_1h') {
-                dateformat = 'dd HH:mm';
-            }
-            //	this.log.info(JSON.stringify(data));
+          if (channel === 'data_1h') {
+              dateformat = 'dd HH:mm';
+          }
 
-            if (data[0].precipitationrate > 0) {
-                isRainingNow = true;
-            }
+          this.setStateAsync(`${channel}.isRainingNow`, { val: isRainingNow, ack: true });
 
-            this.setStateAsync(`${channel}.isRainingNow`, { val: isRainingNow, ack: true });
+          await this.setStateAsync(`${channel}.timestamp`, { val: data[0]?.time || '', ack: true });
+          await this.setStateAsync(`${channel}.actualRain`, { val: data[0]?.precipitationrate || 0, ack: true });
 
-            await this.setStateAsync(`${channel}.timestamp`, { val: data[0].time, ack: true });
-            await this.setStateAsync(`${channel}.actualRain`, { val: data[0].precipitationrate, ack: true });
+          for (const item of data) {
+              raindata.push(item.precipitationrate);
 
-            for (const i in data) {
-                raindata.push(data[i].precipitationrate);
+              const date = new Date(item.time);
+              const timestamp = date.getTime(); 
 
-                const item_rain = {};
-                const item_rain_echart = {};
+              if (rainStartsAt === '-1' && item.precipitationrate > 0) {
+                  rainStartsAt = date.toISOString();
+                  rainStartAmount = item.c ?? 0;
+              }
 
-                const date = new Date(data[i].time);
-                const timestamp = Date.parse(date.toISOString());
+              JSONdata_rain.push({
+                  label: date.toLocaleTimeString('de-de', { hour: '2-digit', minute: '2-digit' }), // fromatiere ausgabe
+                  value: item.precipitationrate.toString(),
+              });
 
-                if (rainStartsAt == '-1') {
-                    if (data[i].precipitationrate > 0) {
-                        rainStartsAt = date.format('YYYY-MM-DDTHH:mm:ssZ');
-                        rainStartAmount = 0;
-                        if (data[i].c != undefined) {
-                            rainStartAmount = data[i].c;
-                        }
-                    }
-                }
-                item_rain['label'] = date.format(dateformat).toString();
-                item_rain['value'] = data[i].precipitationrate.toString();
-                JSONdata_rain.push(item_rain);
+              JSONdata_echart.push({
+                  ts: timestamp,
+                  val: item.precipitationrate,
+              });
+          }
 
-                item_rain_echart['ts'] = timestamp;
-                item_rain_echart['val'] = data[i].precipitationrate;
-                JSONdata_echart.push(item_rain_echart);
-            }
-            JSONdata_rain = JSON.parse(JSON.stringify(JSONdata_rain));
-            JSONdata_echart = JSON.parse(JSON.stringify(JSONdata_echart));
+          this.log.debug(`Rain (${channel}): ${JSON.stringify(JSONdata_rain)}`);
 
-            raindata = JSON.parse(JSON.stringify(raindata));
-
-            this.log.debug(`Rain (${channel}): ${JSON.stringify(JSONdata_rain)}`);
-
-            await this.setStateAsync(`${channel}.chartRain`, { val: JSON.stringify(JSONdata_rain), ack: true });
-            await this.setStateAsync(`${channel}.echartRain`, { val: JSON.stringify(JSONdata_echart), ack: true });
-            await this.setStateAsync(`${channel}.raindata`, { val: JSON.stringify(raindata), ack: true });
-            await this.setStateAsync(`${channel}.rainStartsAt`, { val: rainStartsAt, ack: true });
-            await this.setStateAsync(`${channel}.startRain`, { val: rainStartAmount, ack: true });
-        } catch (error) {
-            this.log.error(error);
-        }
+          await this.setStateAsync(`${channel}.chartRain`, { val: JSON.stringify(JSONdata_rain), ack: true });
+          await this.setStateAsync(`${channel}.echartRain`, { val: JSON.stringify(JSONdata_echart), ack: true });
+          await this.setStateAsync(`${channel}.raindata`, { val: JSON.stringify(raindata), ack: true });
+          await this.setStateAsync(`${channel}.rainStartsAt`, { val: rainStartsAt, ack: true });
+          await this.setStateAsync(`${channel}.startRain`, { val: rainStartAmount, ack: true });
+      } catch (error) {
+          this.log.error(error);
+      }
     }
 
     async destroyBrowser() {
