@@ -52,7 +52,7 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.2.1-alpha.1 (2025-03-25)
 - (arteck) Language support has been added.
 - (mcm1957) Unused dependencies have been removed.
 
