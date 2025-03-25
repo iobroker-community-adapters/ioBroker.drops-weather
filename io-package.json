@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.1-alpha.1",
+    "version": "1.2.1",
     "news": {
-      "1.2.1-alpha.1": {
+      "1.2.1": {
         "en": "Language support has been added.\nUnused dependencies have been removed.",
         "de": "Sprachunterstützung wurde hinzugefügt.\nUngenutzte Abhängigkeiten wurden entfernt.",
         "ru": "Добавлена языковая поддержка.\nНеиспользуемые зависимости были удалены.",
@@ -15,19 +15,6 @@
         "pl": "Dodano wsparcie językowe.\nNiewykorzystane zależności zostały usunięte.",
         "uk": "Додано мовну підтримку.\nНевикористані залежності видаляються.",
         "zh-cn": "增加了语言支持.\n未使用的依赖关系已被删除 ."
-      },
-      "1.2.1-alpha.0": {
-        "en": "Language support has been added.",
-        "de": "Sprachunterstützung wurde hinzugefügt.",
-        "ru": "Добавлена языковая поддержка.",
-        "pt": "Foi adicionado suporte linguístico.",
-        "nl": "Taalondersteuning is toegevoegd.",
-        "fr": "Un soutien linguistique a été ajouté.",
-        "it": "È stato aggiunto il supporto linguistico.",
-        "es": "Se ha añadido apoyo lingüístico.",
-        "pl": "Dodano wsparcie językowe.",
-        "uk": "Додано мовну підтримку.",
-        "zh-cn": "增加了语言支持."
       },
       "1.2.0": {
         "en": "Timeout has been encreased to 15s.\nLogging has been reduced.\nAdapter has been converted to scheduled operation. \nA spelling error blocking chromium-browser manual selection has been corrected.",
