@@ -52,6 +52,9 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (arteck) Language support has been added. 
+
 ### 1.2.0 (2025-03-24)
 - (mcm1957) Timeout has been encreased to 15s.
 - (mcm1957) Logging has been reduced.
