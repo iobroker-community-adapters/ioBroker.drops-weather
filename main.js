@@ -18,6 +18,10 @@ class DropsWeather extends utils.Adapter {
             name: 'drops-weather',
         });
 
+        this.mainURLEN = 'https://www.meteox.com/';
+        this.mainURLDE = 'https://www.niederschlagsradar.de/';
+        this.pageTimeout = 60000;
+        
         this.on('ready', this.onReady.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
@@ -77,6 +81,11 @@ class DropsWeather extends utils.Adapter {
 
     //----------------------------------------------------------------------------------------------------
     async readDataFromServer() {
+        const mainURL = this.mainURLDE;
+
+        if (this.config.language == en) {
+            mainURL = this.mainURLEN;
+        }
         const url = `https://www.meteox.com/${this.config.language}/city/${this.config.citycode}`;
 
         watchdog = this.setTimeout(() => {
@@ -89,6 +98,7 @@ class DropsWeather extends utils.Adapter {
             headless: true,
             defaultViewport: null,
             executablePath: this.chromeExecutable,
+            userDataDir: '/dev/null',
             args: [
                 '--periodic-task',
                 '--no-sandbox',
@@ -100,12 +110,29 @@ class DropsWeather extends utils.Adapter {
                 '--single-process',
                 '--disable-gpu',
                 '--ignore-certificate-errors',
+                '--disable-extensions',
+                '--disable-component-extensions-with-background-pages',
+                '--disable-default-apps',
+                '--mute-audio',
+                '--no-default-browser-check',
+                '--autoplay-policy=user-gesture-required',
+                '--disable-background-timer-throttling',
+                '--disable-backgrounding-occluded-windows',
+                '--disable-notifications',
+                '--disable-background-networking',
+                '--disable-breakpad',
+                '--disable-component-update',
+                '--disable-domain-reliability',
+                '--disable-sync',
             ],
         };
+        
         if (this.chromeExecutable) {
             puppeteerLaunchCfg[puppeteer.executablePath] = this.chromeExecutable;
         }
+        
         this.log.debug(`puppeteer.lauch invoked with ${JSON.stringify(puppeteerLaunchCfg)}`);
+        
         try {
             browser = await puppeteer.launch(puppeteerLaunchCfg);
 
@@ -142,7 +169,7 @@ class DropsWeather extends utils.Adapter {
                         script.textContent.includes('RainGraph.create({'),
                     );
                 },
-                { timeout: 15000 },
+                { timeout: this.pageTimeout },
             );
 
             this.log.debug(`domcontent loaded, evaluate page`);
@@ -260,6 +287,7 @@ class DropsWeather extends utils.Adapter {
         this.log.debug('destroy browser');
         const pages = await browser.pages();
         for (let i = 0; i < pages.length; i++) {
+            await pages[i].deleteCookie();
             await pages[i].close();
         }
         await browser.close();
