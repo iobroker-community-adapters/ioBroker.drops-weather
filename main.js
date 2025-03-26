@@ -83,7 +83,7 @@ class DropsWeather extends utils.Adapter {
     async readDataFromServer() {
         const mainURL = this.mainURLDE;
 
-        if (this.config.language == en) {
+        if (this.config.language == 'en') {
             mainURL = this.mainURLEN;
         }
         const url = `https://www.meteox.com/${this.config.language}/city/${this.config.citycode}`;
