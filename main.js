@@ -81,12 +81,12 @@ class DropsWeather extends utils.Adapter {
 
     //----------------------------------------------------------------------------------------------------
     async readDataFromServer() {
-        const mainURL = this.mainURLDE;
+        let mainURL = this.mainURLDE;
 
         if (this.config.language == 'en') {
             mainURL = this.mainURLEN;
         }
-        const url = `https://www.meteox.com/${this.config.language}/city/${this.config.citycode}`;
+        const url = `${mainURL}${this.config.language}/city/${this.config.citycode}`;
 
         watchdog = this.setTimeout(() => {
             this.log.error('timeout connecting to brower ${this.chromeExecutable}');
