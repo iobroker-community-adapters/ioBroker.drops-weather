@@ -7,7 +7,7 @@
 ![Number of Installations](https://iobroker.live/badges/drops-weather-installed.svg)
 ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/iobroker.drops-weather?label=npm%20dependencies&style=flat-square)
 
-![GitHub](https://img.shields.io/github/license/inbuxiobroker-community-adapaters/iobroker.drops-weather?style=flat-square)
+![GitHub](https://img.shields.io/github/license/iobroker-community-adapters/iobroker.drops-weather?style=flat-square)
 ![Test and Release](https://github.com/iobroker-community-adapters/ioBroker.drops-weather/workflows/Test%20and%20Release/badge.svg)
 
 ![Current version in stable repository](https://iobroker.live/badges/drops-weather-stable.svg)
