@@ -1,4 +1,10 @@
 # Older Changelogs
+## 1.0.0 (2025-03-17)
+- (mcm1957) adapter has been migrated to iobroker-community-adapters organisation
+- (mcm1957) adapter requires node.js 20.x, js-controller 6 and admin 7 now.
+- (arteck) axios has been replaced by puppeteer
+- (mcm1957) dependencies have been updated
+
 ## 0.3.0 (2024-02-05)
 
 - (inbux) breaking changes in drops.live homepage (2024-02-05)

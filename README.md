@@ -52,6 +52,9 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 1.2.3 (2025-03-29)
+- (arteck) delete text if no text available
+
 ### 1.2.2 (2025-03-29)
 - (arteck) add puppeteer-extra and puppeteer-extra-plugin-stealth
 
@@ -68,12 +71,6 @@ This adapter would not have been possible without the great work of @inbux (http
 ### 1.1.0 (2025-03-19)
 - (mcm1957) support for raspberryPi / arm architecture added
 - (mcm1957) adminUI extended to allow browser selection
-- (mcm1957) dependencies have been updated
-
-### 1.0.0 (2025-03-17)
-- (mcm1957) adapter has been migrated to iobroker-community-adapters organisation
-- (mcm1957) adapter requires node.js 20.x, js-controller 6 and admin 7 now.
-- (arteck) axios has been replaced by puppeteer
 - (mcm1957) dependencies have been updated
 
 ## License

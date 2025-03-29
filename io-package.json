@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "news": {
+      "1.2.3": {
+        "en": "delete text if no text available",
+        "de": "text löschen, wenn kein text verfügbar ist",
+        "ru": "удалять текст, если нет текста",
+        "pt": "excluir texto se nenhum texto disponível",
+        "nl": "tekst verwijderen als er geen tekst beschikbaar is",
+        "fr": "supprimer le texte si aucun texte disponible",
+        "it": "cancellare il testo se non è disponibile",
+        "es": "borrar texto si no hay texto disponible",
+        "pl": "usuń tekst, jeśli nie jest dostępny",
+        "uk": "видалити текст, якщо текст не доступний",
+        "zh-cn": "如果没有可用的文本,则删除文本"
+      },
       "1.2.2": {
         "en": "add puppeteer-extra and puppeteer-extra-plugin-stealth",
         "de": "puppeteer-extra und puppeteer-extra-plugin-stealth",
