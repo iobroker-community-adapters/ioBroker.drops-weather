@@ -1,4 +1,13 @@
 # Older Changelogs
+## 0.3.0 (2024-02-05)
+
+- (inbux) breaking changes in drops.live homepage (2024-02-05)
+
+- (inbux) parsing of drops.live homepage updated
+- (inbux) GPS position is not longer supported on the website, added city code in configuration
+- (inbux) removed temperture because this data is not longer available
+- (inbux) updated readme
+
 ## 0.2.3 (2024-01-17)
 - (inbux) updated dependencies
 

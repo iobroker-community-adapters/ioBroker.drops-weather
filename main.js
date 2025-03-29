@@ -194,7 +194,7 @@ class DropsWeather extends utils.Adapter {
                 // @ts-expect-error document seems to be defined by puppeteer
                 // eslint-disable-next-line no-undef
                 const element = document.querySelector('p[data-component="rainGraph-nowcastText"]');
-                const labeltext = element ? element.textContent : 'Kein Text gefunden';
+                const labeltext = element ? element.textContent : '';
                 return labeltext;
             });
 

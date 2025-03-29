@@ -52,7 +52,7 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.2.2 (2025-03-29)
 - (arteck) add puppeteer-extra and puppeteer-extra-plugin-stealth
 
 ### 1.2.1 (2025-03-25)
@@ -75,15 +75,6 @@ This adapter would not have been possible without the great work of @inbux (http
 - (mcm1957) adapter requires node.js 20.x, js-controller 6 and admin 7 now.
 - (arteck) axios has been replaced by puppeteer
 - (mcm1957) dependencies have been updated
-
-### 0.3.0 (2024-02-05)
-
-- (inbux) breaking changes in drops.live homepage (2024-02-05)
-
-- (inbux) parsing of drops.live homepage updated
-- (inbux) GPS position is not longer supported on the website, added city code in configuration
-- (inbux) removed temperture because this data is not longer available
-- (inbux) updated readme
 
 ## License
 

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "news": {
+      "1.2.2": {
+        "en": "add puppeteer-extra and puppeteer-extra-plugin-stealth",
+        "de": "puppeteer-extra und puppeteer-extra-plugin-stealth",
+        "ru": "добавить кукольник-экстра и кукольник-экстра-плюгин-стелс",
+        "pt": "adicionar puppeteer-extra e puppeteer-extra-plugin-stealth",
+        "nl": "puppeteer-extra en puppeteer-extra-plugin-stealth toevoegen",
+        "fr": "ajouter marionnettiste-extra et marionnettiste-extra-plugin-stealth",
+        "it": "aggiungere burattinaio-extra e burattinaio-extra-plugin-stealth",
+        "es": "añadir titiritero-extra y titiritero-extra-plugin-stealth",
+        "pl": "dodaj lalka- extra i lalka- extra- plugin- stealth",
+        "uk": "add puppeteer-extra і puppeteer-extra-plugin-stealth",
+        "zh-cn": "增加木偶- 外置和木偶- 外置"
+      },
       "1.2.1": {
         "en": "Language support has been added.\nUnused dependencies have been removed.",
         "de": "Sprachunterstützung wurde hinzugefügt.\nUngenutzte Abhängigkeiten wurden entfernt.",
