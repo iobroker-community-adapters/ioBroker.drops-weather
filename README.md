@@ -53,10 +53,10 @@ This adapter would not have been possible without the great work of @inbux (http
 	### **WORK IN PROGRESS**
 -->
 ### 1.2.3 (2025-03-29)
-- (arteck) delete text if no text available
+- (arteck) Text is now deleted if no text is available
 
 ### 1.2.2 (2025-03-29)
-- (arteck) add puppeteer-extra and puppeteer-extra-plugin-stealth
+- (arteck) Puppeteer-extra and puppeteer-extra-plugin-stealth have been added
 
 ### 1.2.1 (2025-03-25)
 - (arteck) Language support has been added.
