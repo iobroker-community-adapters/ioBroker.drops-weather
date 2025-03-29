@@ -3,7 +3,11 @@
 const utils = require('@iobroker/adapter-core');
 const os = require('node:os');
 
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+
+// add the stealth plugin
+puppeteer.use(StealthPlugin());
 
 let watchdog = null;
 let browser = null;
@@ -21,7 +25,7 @@ class DropsWeather extends utils.Adapter {
         this.mainURLEN = 'https://www.meteox.com/';
         this.mainURLDE = 'https://www.niederschlagsradar.de/';
         this.pageTimeout = 60000;
-        
+
         this.on('ready', this.onReady.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
@@ -126,13 +130,13 @@ class DropsWeather extends utils.Adapter {
                 '--disable-sync',
             ],
         };
-        
+
         if (this.chromeExecutable) {
             puppeteerLaunchCfg[puppeteer.executablePath] = this.chromeExecutable;
         }
-        
+
         this.log.debug(`puppeteer.lauch invoked with ${JSON.stringify(puppeteerLaunchCfg)}`);
-        
+
         try {
             browser = await puppeteer.launch(puppeteerLaunchCfg);
 
@@ -158,7 +162,7 @@ class DropsWeather extends utils.Adapter {
             );
 
             await page.goto(url, {
-                waitUntil: 'networkidle2', // Warten, bis die Seite fertig geladen ist
+                waitUntil: 'networkidle0', // Warten, bis die Seite fertig geladen ist
             });
 
             await page.waitForFunction(
@@ -286,6 +290,7 @@ class DropsWeather extends utils.Adapter {
     async destroyBrowser() {
         this.log.debug('destroy browser');
         const pages = await browser.pages();
+        this.log.debug(`pages ${pages.length}`);
         for (let i = 0; i < pages.length; i++) {
             await pages[i].deleteCookie();
             await pages[i].close();
