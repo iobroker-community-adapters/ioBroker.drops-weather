@@ -52,6 +52,10 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (mcm1957) fix language default.
+- (mcm1957) dependencies have been updated
+
 ### 1.2.3 (2025-03-29)
 - (arteck) Text is now deleted if no text is available
 
