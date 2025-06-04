@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "news": {
+      "1.2.4": {
+        "en": "fix language default.\ndependencies have been updated",
+        "de": "spracheinstellung fixieren.\nabhängigkeiten wurden aktualisiert",
+        "ru": "исправить языковой дефолт.\nобновлены зависимости",
+        "pt": "corrigir idioma padrão.\ndependências foram atualizadas",
+        "nl": "fix taalstandaard.\nafhankelijkheden zijn bijgewerkt",
+        "fr": "corriger la langue par défaut.\nles dépendances ont été mises à jour",
+        "it": "correzione di default del linguaggio.\nle dipendenze sono state aggiornate",
+        "es": "arregla el idioma por defecto.\nlas dependencias se han actualizado",
+        "pl": "ustaw domyślny język.\nuzależnienia zostały zaktualizowane",
+        "uk": "за замовчуванням за замовчуванням.\nбуло оновлено залежності",
+        "zh-cn": "固定语言默认值.\n依赖关系已更新"
+      },
       "1.2.3": {
         "en": "delete text if no text available",
         "de": "text löschen, wenn kein text verfügbar ist",

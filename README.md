@@ -52,7 +52,7 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.2.4 (2025-06-04)
 - (mcm1957) fix language default.
 - (mcm1957) dependencies have been updated
 
@@ -71,11 +71,6 @@ This adapter would not have been possible without the great work of @inbux (http
 - (mcm1957) Logging has been reduced.
 - (arteck) Adapter has been converted to scheduled operation. 
 - (mcm1957) A spelling error blocking chromium-browser manual selection has been corrected.
-
-### 1.1.0 (2025-03-19)
-- (mcm1957) support for raspberryPi / arm architecture added
-- (mcm1957) adminUI extended to allow browser selection
-- (mcm1957) dependencies have been updated
 
 ## License
 

@@ -1,4 +1,9 @@
 # Older Changelogs
+## 1.1.0 (2025-03-19)
+- (mcm1957) support for raspberryPi / arm architecture added
+- (mcm1957) adminUI extended to allow browser selection
+- (mcm1957) dependencies have been updated
+
 ## 1.0.0 (2025-03-17)
 - (mcm1957) adapter has been migrated to iobroker-community-adapters organisation
 - (mcm1957) adapter requires node.js 20.x, js-controller 6 and admin 7 now.
