@@ -24,7 +24,7 @@ class DropsWeather extends utils.Adapter {
 
         this.mainURLEN = 'https://www.meteox.com/';
         this.mainURLDE = 'https://www.niederschlagsradar.de/';
-        this.pageTimeout = 60000;
+        this.pageTimeout = this.config.browserTimeout * 1000;
 
         this.on('ready', this.onReady.bind(this));
         this.on('unload', this.onUnload.bind(this));
@@ -102,7 +102,7 @@ class DropsWeather extends utils.Adapter {
             headless: true,
             defaultViewport: null,
             executablePath: this.chromeExecutable,
-            userDataDir: '/dev/null',
+            userDataDir: this.config.tempFolder,
             args: [
                 '--periodic-task',
                 '--no-sandbox',

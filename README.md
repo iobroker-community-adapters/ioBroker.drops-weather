@@ -52,6 +52,10 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 1.2.5 (2025-06-19)
+- (arteck) add browser timeout
+- (arteck) add temp folder definition
+
 ### 1.2.4 (2025-06-04)
 - (mcm1957) fix language default.
 - (mcm1957) dependencies have been updated
@@ -65,12 +69,6 @@ This adapter would not have been possible without the great work of @inbux (http
 ### 1.2.1 (2025-03-25)
 - (arteck) Language support has been added.
 - (mcm1957) Unused dependencies have been removed.
-
-### 1.2.0 (2025-03-24)
-- (mcm1957) Timeout has been encreased to 15s.
-- (mcm1957) Logging has been reduced.
-- (arteck) Adapter has been converted to scheduled operation. 
-- (mcm1957) A spelling error blocking chromium-browser manual selection has been corrected.
 
 ## License
 

@@ -9,5 +9,6 @@
     "lblBrowserCfg": "Browser Configuration",
     "lblBrowserMode": "Browser Mode",
     "lblBrowserPath": "Browser Path",
-    "lblLang": "Language"
+    "lblLang": "Language",
+    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows": "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows"
 }

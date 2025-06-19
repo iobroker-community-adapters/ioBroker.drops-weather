@@ -13,5 +13,7 @@
     "lblBrowserPath": "Шлях браузера",
     "hdrSetupGuide": "Посібник з налаштування",
     "hdrConfiguration": "Конфігурація",
-    "lblLang": "Мова"
+    "lblLang": "Мова",
+    "temp folder for Browser call": "Тимчасова папка для виклику браузера",
+    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows",: "Визначте тимчасову папку для виклику браузера, якщо виникають проблеми з папкою за замовчуванням. tmp - це типово для linux, %TEMP% для windows"
 }

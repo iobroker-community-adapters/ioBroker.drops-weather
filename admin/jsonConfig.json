@@ -110,7 +110,7 @@
 					"md": 8,
 					"lg": 6,
 					"xl": 4
-				}  				
+				}
 			}
 		},
 		"_puppeteer": {
@@ -144,6 +144,29 @@
 					"md": 12,
 					"lg": 12,
 					"xl": 12
+				},
+				"browserTimeout": {
+					"type": "number",
+					"label": "Browser Timeout",
+					"newLine": true,
+					"help": "in sec",
+					"default": 60,
+					"xs": 12,
+					"sm": 10,
+					"md": 8,
+					"lg": 6,
+					"xl": 4
+				},
+        		"tempFolder": {
+					"type": "text",
+					"label": "temp folder for Browser call",
+					"help": "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows",
+					"default": "/tmp",
+					"xs": 12,
+					"sm": 10,
+					"md": 8,
+					"lg": 6,
+					"xl": 4
 				}
 			}
 		}

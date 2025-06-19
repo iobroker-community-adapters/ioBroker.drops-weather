@@ -13,5 +13,7 @@
     "lblBrowserPath": "Browserpfad",
     "hdrSetupGuide": "Setup -Handbuch",
     "hdrConfiguration": "Konfiguration",
-    "lblLang": "Sprache"
+    "lblLang": "Sprache",
+    "temp folder for Browser call": "Temp-Ordner für Browseraufruf",
+    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows": "Definiere den Temp-Ordner für den Browseraufruf, wenn es Probleme mit dem Standardordner gibt. tmp ist der Standard für Linux, %TEMP% für Windows"
 }

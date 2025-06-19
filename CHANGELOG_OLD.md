@@ -1,4 +1,10 @@
 # Older Changelogs
+## 1.2.0 (2025-03-24)
+- (mcm1957) Timeout has been encreased to 15s.
+- (mcm1957) Logging has been reduced.
+- (arteck) Adapter has been converted to scheduled operation. 
+- (mcm1957) A spelling error blocking chromium-browser manual selection has been corrected.
+
 ## 1.1.0 (2025-03-19)
 - (mcm1957) support for raspberryPi / arm architecture added
 - (mcm1957) adminUI extended to allow browser selection

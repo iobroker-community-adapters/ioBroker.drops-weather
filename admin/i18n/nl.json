@@ -13,5 +13,7 @@
     "lblBrowserPath": "Browserpad",
     "hdrSetupGuide": "Setup -gids",
     "hdrConfiguration": "Configuratie",
-    "lblLang": "Taal"
+    "lblLang": "Taal",
+    "temp folder for Browser call": "Temp -map voor browseraanroep",
+    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows",: "Definieer de temp- map voor de browsercall als er problemen zijn met de standaardmap. tmp is de standaard voor linux, %TEMP% voor windows"
 }

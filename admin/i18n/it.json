@@ -13,5 +13,7 @@
     "lblBrowserPath": "Percorso del browser",
     "hdrSetupGuide": "Guida di configurazione",
     "hdrConfiguration": "Configurazione",
-    "lblLang": "Lingua"
+    "lblLang": "Lingua",
+    "temp folder for Browser call": "Cartella temporanea per la chiamata del browser",
+    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows",: "Definisci la cartella temporanea per la chiamata del browser se ci sono problemi con la cartella predefinita. tmp è il predefinito per linux, %TEMP% per windows"
 }
