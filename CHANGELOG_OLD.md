@@ -1,4 +1,8 @@
 # Older Changelogs
+## 1.2.1 (2025-03-25)
+- (arteck) Language support has been added.
+- (mcm1957) Unused dependencies have been removed.
+
 ## 1.2.0 (2025-03-24)
 - (mcm1957) Timeout has been encreased to 15s.
 - (mcm1957) Logging has been reduced.

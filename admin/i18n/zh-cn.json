@@ -15,5 +15,5 @@
     "hdrConfiguration": "配置",
     "lblLang": "语言",
     "temp folder for Browser call": "浏览器调用的临时文件夹",
-    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows",: "如果有默认文件夹的问题，定义浏览器调用的临时文件夹。tmp是Linux的默认，%TEMP%是Windows的默认"
+    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows": "如果有默认文件夹的问题，定义浏览器调用的临时文件夹。tmp是Linux的默认，%TEMP%是Windows的默认"
 }

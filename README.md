@@ -52,6 +52,9 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 1.2.6 (2025-06-24)
+- (arteck) fiyx translate
+
 ### 1.2.5 (2025-06-19)
 - (arteck) add browser timeout
 - (arteck) add temp folder definition
@@ -65,10 +68,6 @@ This adapter would not have been possible without the great work of @inbux (http
 
 ### 1.2.2 (2025-03-29)
 - (arteck) Puppeteer-extra and puppeteer-extra-plugin-stealth have been added
-
-### 1.2.1 (2025-03-25)
-- (arteck) Language support has been added.
-- (mcm1957) Unused dependencies have been removed.
 
 ## License
 

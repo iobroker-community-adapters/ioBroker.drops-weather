@@ -15,5 +15,5 @@
     "hdrConfiguration": "Configuration",
     "lblLang": "Langue",
     "temp folder for Browser call": "Dossier temporaire pour l'appel du navigateur",
-    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows",: "Définissez le dossier temporaire pour l'appel du navigateur s'il y a des problèmes avec le dossier par défaut. tmp est le défaut pour linux, %TEMP% pour windows"
+    "Define the temp folder for the browser call if there are problems with the default folder. tmp is the default for linux, %TEMP% for windows": "Définissez le dossier temporaire pour l'appel du navigateur s'il y a des problèmes avec le dossier par défaut. tmp est le défaut pour linux, %TEMP% pour windows"
 }

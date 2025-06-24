@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.5",
+    "version": "1.2.6",
     "news": {
+      "1.2.6": {
+        "en": "fiyx translate",
+        "de": "fiyx übersetzen",
+        "ru": "фикс переводить",
+        "pt": "fiyx traduzir",
+        "nl": "fuyx vertalen",
+        "fr": "fiyx traduire",
+        "it": "tradurre",
+        "es": "fiyx traducir",
+        "pl": "fiyx tłumacz",
+        "uk": "fiyx переклад",
+        "zh-cn": "fiyx 翻译"
+      },
       "1.2.5": {
         "en": "add browser timeout\nadd temp folder definition",
         "de": "browser timeout hinzufügen\ntemp ordnerdefinition hinzufügen",
@@ -80,19 +93,6 @@
         "pl": "Czas minął do 15.\nZmniejszono logowanie.\nAdapter został przekształcony w operację planową.\nBłąd pisowni blokujący wybór podręcznika przeglądarki chromii został poprawiony.",
         "uk": "Відбувся час до 15-х років.\nСкорочення було зменшено.\nПеретворено перехід на заплановану операцію.\nВиправлено помилку, що блокує хром-коричневий ручний вибір.",
         "zh-cn": "暂停时间已缩短至15秒.\n采伐已经减少.\n适配器已转换为预定操作.\n拼写错误阻断铬-浏览器手动选择已经改正."
-      },
-      "1.1.0": {
-        "en": "support for raspberryPi / arm architecture added\nadminUI extended to allow browser selection\ndependencies have been updated",
-        "de": "unterstützung für Himbeere Pi / Arm Architektur hinzugefügt\nadmin UI erweitert um Browserauswahl zu ermöglichen\nabhängigkeiten wurden aktualisiert",
-        "ru": "поддержка малины Добавлена архитектура Pi / Arm\nадмин UI расширен для выбора браузера\nобновлены зависимости",
-        "pt": "suporte para framboesa Pi / arquitetura de braço adicionado\nadministrador UI estendida para permitir a seleção do navegador\ndependências foram atualizadas",
-        "nl": "ondersteuning voor framboos Pi / arm architectuur toegevoegd\nadmin UI uitgebreid om browserselectie mogelijk te maken\nafhankelijkheden zijn bijgewerkt",
-        "fr": "soutien à la framboise Pi / architecture de bras ajouté\nadministrateur UI étendue pour permettre la sélection du navigateur\nles dépendances ont été mises à jour",
-        "it": "supporto per lampone Pi / braccio architettura aggiunto\nadmin UI esteso per consentire la selezione del browser\nle dipendenze sono state aggiornate",
-        "es": "soporte para frambuesa Pi / arma arquitectura añadido\nadmin UI extendida para permitir la selección del navegador\nlas dependencias se han actualizado",
-        "pl": "wsparcie dla malin Dodano architekturę Pi / arm\nadmin Interfejs rozszerzony, aby umożliwić wybór przeglądarki\nuzależnienia zostały zaktualizowane",
-        "uk": "підтримка малини Pi / архітектура додано\nадмін UI розширено для вибору браузера\nбуло оновлено залежності",
-        "zh-cn": "支持树莓 添加 Pi / 臂结构\n管理员 UI 扩展允许浏览器选择\n依赖关系已更新"
       }
     },
     "titleLang": {
