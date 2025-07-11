@@ -1,4 +1,7 @@
 # Older Changelogs
+## 1.2.2 (2025-03-29)
+- (arteck) Puppeteer-extra and puppeteer-extra-plugin-stealth have been added
+
 ## 1.2.1 (2025-03-25)
 - (arteck) Language support has been added.
 - (mcm1957) Unused dependencies have been removed.

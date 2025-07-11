@@ -86,6 +86,7 @@ class DropsWeather extends utils.Adapter {
     //----------------------------------------------------------------------------------------------------
     async readDataFromServer() {
         let mainURL = this.mainURLDE;
+        let ticker = 0;
 
         if (this.config.language == 'en') {
             mainURL = this.mainURLEN;
@@ -139,14 +140,19 @@ class DropsWeather extends utils.Adapter {
 
         try {
             browser = await puppeteer.launch(puppeteerLaunchCfg);
-
+            ticker = 0;
             this.clearTimeout(watchdog);
             watchdog = null;
         } catch (e) {
+            ticker++;
             this.log.error(`error launching browser ${this.chromeExecutable} - ${e}`);
-            this.disable();
-            this.terminate();
-            return;
+            this.destroyBrowser();
+            this.readDataFromServer();
+            if (ticker > 5) {
+                this.disable();
+                this.terminate();
+                return;
+            }
         }
 
         this.log.debug(`Reading data from : ${url}`);
