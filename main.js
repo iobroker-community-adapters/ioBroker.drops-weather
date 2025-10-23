@@ -2,6 +2,8 @@
 
 const utils = require('@iobroker/adapter-core');
 const os = require('node:os');
+const platform = os.platform();
+const arch = os.arch();
 
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
@@ -34,49 +36,56 @@ class DropsWeather extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
-        if (!this.config.browserMode) {
-            this.config.browserMode = 'automatic';
-        }
-        this.log.debug(`browserMode set to ${this.config.browserMode}, running on ${os.platform} / ${os.arch}`);
+        // Defaultwert setzen
+        this.config.browserMode ||= 'automatic';
+
+        this.log.debug(`browserMode set to ${this.config.browserMode}, running on ${platform} / ${arch}`);
+
         this.chromeExecutable = undefined;
 
-        if (this.config.browserMode === 'built-in') {
-            if (os.arch() === 'arm') {
-                this.log.error(
-                    `browser mode ${this.config.browserMode} not supported on platform ${os.platform()} / ${os.arch()}`,
-                );
-                this.disable();
-                this.terminate();
-                return;
-            }
-        } else if (this.config.browserMode === 'chromium-browser') {
-            if (os.platform() !== 'linux' || os.arch() !== 'arm') {
-                this.log.error(
-                    `browser mode ${this.config.browserMode} not supported on platform ${os.platform()} / ${os.arch()}`,
-                );
-                this.disable();
-                this.terminate();
-                return;
-            }
-            this.chromeExecutable = '/usr/bin/chromium-browser';
-        } else if (this.config.browserMode === 'external') {
-            this.chromeExecutable = this.config.browserPath;
-        } else if (this.config.browserMode === 'automatic') {
-            if (os.platform() === 'linux' && os.arch() === 'arm') {
-                this.chromeExecutable = '/usr/bin/chromium-browser';
-            }
-        } else {
-            this.log.error(
-                `browser mode ${this.config.browserMode} not (yet) supported, running on ${os.platform} / ${os.arch}`,
-            );
+        // Helper-Funktion f�r nicht unterst�tzte Modi
+        const unsupported = () => {
+            this.log.error(`browser mode ${this.config.browserMode} not supported on platform ${platform} / ${arch}`);
             this.disable();
             this.terminate();
-            return;
+        };
+
+        switch (this.config.browserMode) {
+            case 'built-in':
+                if (arch === 'arm') {
+                    return unsupported();
+                }
+                break;
+
+            case 'chromium-browser':
+                if (platform !== 'linux' || arch !== 'arm') {
+                    return unsupported();
+                }
+                process.env.PUPPETEER_SKIP_DOWNLOAD = 'true';
+                this.chromeExecutable = '/usr/bin/chromium-browser';
+                break;
+
+            case 'external':
+                process.env.PUPPETEER_SKIP_DOWNLOAD = 'true';
+                this.chromeExecutable = this.config.browserPath;
+                break;
+
+            case 'automatic':
+                if (platform === 'linux' && arch === 'arm') {
+                    this.chromeExecutable = '/usr/bin/chromium-browser';
+                }
+                break;
+
+            default:
+                this.log.error(
+                    `browser mode ${this.config.browserMode} not (yet) supported, running on ${platform} / ${arch}`,
+                );
+                return unsupported();
         }
 
-        this.log.debug(`browserPath set to ${this.chromeExecutable ? this.chromeExecutable : 'puppeteer default'}`);
+        this.log.debug(`browserPath set to ${this.chromeExecutable || 'puppeteer default'}`);
 
-        if (this.config.citycode === null || this.config.citycode === '') {
+        if (!this.config.citycode) {
             this.log.error(`City code not set - please check instance configuration of ${this.namespace}`);
         } else {
             this.readDataFromServer();
@@ -94,9 +103,9 @@ class DropsWeather extends utils.Adapter {
         const url = `${mainURL}${this.config.language}/city/${this.config.citycode}`;
 
         watchdog = this.setTimeout(() => {
-            this.log.error('timeout connecting to brower ${this.chromeExecutable}');
-            this.disable();
-            this.terminate();
+            this.log.error(`timeout connecting to brower ${this.chromeExecutable}`);
+            // this.disable();
+            // this.terminate();
         }, 10000);
 
         const puppeteerLaunchCfg = {
@@ -132,9 +141,8 @@ class DropsWeather extends utils.Adapter {
             ],
         };
 
-        if (this.chromeExecutable) {
-            puppeteerLaunchCfg[puppeteer.executablePath] = this.chromeExecutable;
-        }
+        process.env.PUPPETEER_CACHE_DIR = this.config.tempFolder;
+        puppeteerLaunchCfg[puppeteer.executablePath] = this.chromeExecutable;
 
         this.log.debug(`puppeteer.lauch invoked with ${JSON.stringify(puppeteerLaunchCfg)}`);
 
