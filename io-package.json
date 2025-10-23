@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "news": {
+      "1.2.9": {
+        "en": "skip download chrome if installed",
+        "de": "download chrom herunterladen, wenn installiert",
+        "ru": "скачать chrome, если установлен",
+        "pt": "skip download cromo se instalado",
+        "nl": "download chroom overslaan indien geïnstalleerd",
+        "fr": "sauter télécharger chrome si installé",
+        "it": "scaricare cromato se installato",
+        "es": "saltar descarga cromo si se instala",
+        "pl": "skip pobierz chrom jeśli zainstalowany",
+        "uk": "скаче завантаження хрому при встановленні",
+        "zh-cn": "安装时跳过下载铬"
+      },
       "1.2.8": {
         "en": "Dependencies have been updated",
         "de": "Abhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "usuń tekst, jeśli nie jest dostępny",
         "uk": "видалити текст, якщо текст не доступний",
         "zh-cn": "如果没有可用的文本,则删除文本"
-      },
-      "1.2.2": {
-        "en": "add puppeteer-extra and puppeteer-extra-plugin-stealth",
-        "de": "puppeteer-extra und puppeteer-extra-plugin-stealth",
-        "ru": "добавить кукольник-экстра и кукольник-экстра-плюгин-стелс",
-        "pt": "adicionar puppeteer-extra e puppeteer-extra-plugin-stealth",
-        "nl": "puppeteer-extra en puppeteer-extra-plugin-stealth toevoegen",
-        "fr": "ajouter marionnettiste-extra et marionnettiste-extra-plugin-stealth",
-        "it": "aggiungere burattinaio-extra e burattinaio-extra-plugin-stealth",
-        "es": "añadir titiritero-extra y titiritero-extra-plugin-stealth",
-        "pl": "dodaj lalka- extra i lalka- extra- plugin- stealth",
-        "uk": "add puppeteer-extra і puppeteer-extra-plugin-stealth",
-        "zh-cn": "增加木偶- 外置和木偶- 外置"
       }
     },
     "titleLang": {

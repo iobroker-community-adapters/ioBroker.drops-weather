@@ -1,4 +1,8 @@
 # Older Changelogs
+## 1.2.4 (2025-06-04)
+- (mcm1957) fix language default.
+- (mcm1957) dependencies have been updated
+
 ## 1.2.3 (2025-03-29)
 - (arteck) Text is now deleted if no text is available
 

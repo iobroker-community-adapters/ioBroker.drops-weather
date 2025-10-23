@@ -61,10 +61,12 @@ class DropsWeather extends utils.Adapter {
                 if (platform !== 'linux' || arch !== 'arm') {
                     return unsupported();
                 }
+                process.env.PUPPETEER_SKIP_DOWNLOAD = 'true';
                 this.chromeExecutable = '/usr/bin/chromium-browser';
                 break;
 
             case 'external':
+                process.env.PUPPETEER_SKIP_DOWNLOAD = 'true';
                 this.chromeExecutable = this.config.browserPath;
                 break;
 
@@ -139,9 +141,8 @@ class DropsWeather extends utils.Adapter {
             ],
         };
 
-        if (this.chromeExecutable) {
-            puppeteerLaunchCfg[puppeteer.executablePath] = this.chromeExecutable;
-        }
+        process.env.PUPPETEER_CACHE_DIR = this.config.tempFolder;
+        puppeteerLaunchCfg[puppeteer.executablePath] = this.chromeExecutable;
 
         this.log.debug(`puppeteer.lauch invoked with ${JSON.stringify(puppeteerLaunchCfg)}`);
 
