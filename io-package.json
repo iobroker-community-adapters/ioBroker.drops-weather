@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "drops-weather",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "news": {
+      "1.2.8": {
+        "en": "Dependencies have been updated",
+        "de": "Abhängigkeiten wurden aktualisiert",
+        "ru": "Зависимости были обновлены",
+        "pt": "As dependências foram atualizadas",
+        "nl": "Afhankelijkheden zijn bijgewerkt",
+        "fr": "Les dépendances ont été actualisées",
+        "it": "Le dipendenze sono state aggiornate",
+        "es": "Se han actualizado las dependencias",
+        "pl": "Zaktualizowano zależności",
+        "uk": "Залежність було оновлено",
+        "zh-cn": "依赖关系已更新"
+      },
       "1.2.7": {
         "en": "fix adapter stop after wrong request",
         "de": "fix adapter stop nach falscher anfrage",
@@ -80,19 +93,6 @@
         "pl": "dodaj lalka- extra i lalka- extra- plugin- stealth",
         "uk": "add puppeteer-extra і puppeteer-extra-plugin-stealth",
         "zh-cn": "增加木偶- 外置和木偶- 外置"
-      },
-      "1.2.1": {
-        "en": "Language support has been added.\nUnused dependencies have been removed.",
-        "de": "Sprachunterstützung wurde hinzugefügt.\nUngenutzte Abhängigkeiten wurden entfernt.",
-        "ru": "Добавлена языковая поддержка.\nНеиспользуемые зависимости были удалены.",
-        "pt": "Foi adicionado suporte linguístico.\nAs dependências não utilizadas foram removidas.",
-        "nl": "Taalondersteuning is toegevoegd.\nOngebruikte afhankelijkheden zijn verwijderd.",
-        "fr": "Un soutien linguistique a été ajouté.\nLes dépendances inutilisées ont été supprimées.",
-        "it": "È stato aggiunto il supporto linguistico.\nLe dipendenze non utilizzate sono state rimosse.",
-        "es": "Se ha añadido apoyo lingüístico.\nSe han eliminado las dependencias no utilizadas.",
-        "pl": "Dodano wsparcie językowe.\nNiewykorzystane zależności zostały usunięte.",
-        "uk": "Додано мовну підтримку.\nНевикористані залежності видаляються.",
-        "zh-cn": "增加了语言支持.\n未使用的依赖关系已被删除 ."
       }
     },
     "titleLang": {

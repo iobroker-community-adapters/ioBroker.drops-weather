@@ -1,4 +1,7 @@
 # Older Changelogs
+## 1.2.3 (2025-03-29)
+- (arteck) Text is now deleted if no text is available
+
 ## 1.2.2 (2025-03-29)
 - (arteck) Puppeteer-extra and puppeteer-extra-plugin-stealth have been added
 
