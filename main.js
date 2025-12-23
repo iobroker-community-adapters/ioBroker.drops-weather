@@ -303,13 +303,17 @@ class DropsWeather extends utils.Adapter {
 
     async destroyBrowser() {
         this.log.debug('destroy browser');
-        const pages = await browser.pages();
-        this.log.debug(`pages ${pages.length}`);
-        for (let i = 0; i < pages.length; i++) {
-            await pages[i].deleteCookie();
-            await pages[i].close();
+        try {
+            const pages = await browser.pages();
+            this.log.debug(`pages ${pages.length}`);
+            for (let i = 0; i < pages.length; i++) {
+                await pages[i].deleteCookie();
+                await pages[i].close();
+            }
+            await browser.close();
+        } catch(err) {
+            this.log.error(err);
         }
-        await browser.close();
     }
 
     //----------------------------------------------------------------------------------------------------
