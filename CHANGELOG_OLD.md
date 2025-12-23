@@ -1,4 +1,8 @@
 # Older Changelogs
+## 1.2.5 (2025-06-19)
+- (arteck) add browser timeout
+- (arteck) add temp folder definition
+
 ## 1.2.4 (2025-06-04)
 - (mcm1957) fix language default.
 - (mcm1957) dependencies have been updated

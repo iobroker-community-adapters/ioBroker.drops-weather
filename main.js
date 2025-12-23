@@ -311,7 +311,7 @@ class DropsWeather extends utils.Adapter {
                 await pages[i].close();
             }
             await browser.close();
-        } catch(err) {
+        } catch (err) {
             this.log.error(err);
         }
     }
