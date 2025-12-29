@@ -52,6 +52,10 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+- (copilot) Adapter requires admin >= 7.6.17 now
+
 ### 1.2.10 (2025-12-23)
 - (arteck) Dependencies have been updated
 
