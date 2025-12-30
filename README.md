@@ -52,6 +52,10 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+- (copilot) Adapter requires admin >= 7.6.17 now
+
 ### 1.2.10 (2025-12-23)
 - (arteck) Dependencies have been updated
 
@@ -71,7 +75,8 @@ This adapter would not have been possible without the great work of @inbux (http
 
 MIT License
 
-Copyright (c) 2025, iobroker-community-adapters <iobroker-community-adapters@gmx.de>  
+
+Copyright (c) 2025-2026 iobroker-community-adapters <iobroker-community-adapters@gmx.de>  
 Copyright (c) 2024 inbux <inbux.development@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
