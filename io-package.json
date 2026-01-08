@@ -16,32 +16,6 @@
         "uk": "Залежність було оновлено",
         "zh-cn": "依赖关系已更新"
       },
-      "1.2.9": {
-        "en": "skip download chrome if installed",
-        "de": "download chrom herunterladen, wenn installiert",
-        "ru": "скачать chrome, если установлен",
-        "pt": "skip download cromo se instalado",
-        "nl": "download chroom overslaan indien geïnstalleerd",
-        "fr": "sauter télécharger chrome si installé",
-        "it": "scaricare cromato se installato",
-        "es": "saltar descarga cromo si se instala",
-        "pl": "skip pobierz chrom jeśli zainstalowany",
-        "uk": "скаче завантаження хрому при встановленні",
-        "zh-cn": "安装时跳过下载铬"
-      },
-      "1.2.8": {
-        "en": "Dependencies have been updated",
-        "de": "Abhängigkeiten wurden aktualisiert",
-        "ru": "Зависимости были обновлены",
-        "pt": "As dependências foram atualizadas",
-        "nl": "Afhankelijkheden zijn bijgewerkt",
-        "fr": "Les dépendances ont été actualisées",
-        "it": "Le dipendenze sono state aggiornate",
-        "es": "Se han actualizado las dependencias",
-        "pl": "Zaktualizowano zależności",
-        "uk": "Залежність було оновлено",
-        "zh-cn": "依赖关系已更新"
-      },
       "1.2.7": {
         "en": "fix adapter stop after wrong request",
         "de": "fix adapter stop nach falscher anfrage",
