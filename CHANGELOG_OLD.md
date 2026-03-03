@@ -1,4 +1,7 @@
 # Older Changelogs
+## 1.2.6 (2025-06-24)
+- (arteck) fix translate
+
 ## 1.2.5 (2025-06-19)
 - (arteck) add browser timeout
 - (arteck) add temp folder definition

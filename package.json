@@ -1,6 +1,6 @@
 {
   "name": "iobroker.drops-weather",
-  "version": "1.2.10",
+  "version": "1.3.0",
   "description": "Reading rain forecast from drops.live",
   "author": "inbux <inbux.development@gmail.com>",
   "contributors": [

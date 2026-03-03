@@ -52,8 +52,7 @@ This adapter would not have been possible without the great work of @inbux (http
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.3.0 (2026-03-03)
 - (copilot) Adapter requires admin >= 7.7.22 now
 - (mcm1957) Dependencies have been updated
 
@@ -68,9 +67,6 @@ This adapter would not have been possible without the great work of @inbux (http
 
 ### 1.2.7 (2025-07-11)
 - (arteck) fix adapter stop after wrong request
-
-### 1.2.6 (2025-06-24)
-- (arteck) fix translate
 
 ## License
 
