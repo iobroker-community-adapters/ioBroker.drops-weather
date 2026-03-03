@@ -55,7 +55,7 @@ This adapter would not have been possible without the great work of @inbux (http
 
 ### **WORK IN PROGRESS**
 - (copilot) Adapter requires admin >= 7.7.22 now
-- (copilot) Adapter requires admin >= 7.6.17 now
+- (mcm1957) Dependencies have been updated
 
 ### 1.2.10 (2025-12-23)
 - (arteck) Dependencies have been updated
